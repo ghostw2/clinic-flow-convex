@@ -1,0 +1,344 @@
+<!doctype html><html><head><meta charset="utf-8"><style>@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+/* ClinicFlow — design tokens (shadcn-compatible names) */
+:root{
+  --background:#F6F8F5; --card:#FFFFFF; --foreground:#13221D; --muted:#EFF3EE; --muted-foreground:#66746E;
+  --border:#E2E8E2; --input:#D9E1DA; --ring:#3FA66B;
+  --primary:#1E6B4E; --primary-hover:#185A41; --primary-foreground:#FFFFFF;
+  --brand-50:#EEF8EA; --brand-100:#DDF2D5; --brand-200:#BFE6B2; --brand-300:#98D78A; --brand-500:#3FA66B; --brand-700:#1E6B4E; --brand-900:#14302A; --brand-950:#0E231F;
+  --sidebar:#14302A; --sidebar-fg:#C9DAD3; --sidebar-muted:#86A298; --sidebar-active:#1F4239;
+  --destructive:#C2382B;
+  /* status */
+  --s-booked:#2F5BD8; --s-booked-bg:#E7EEFD;
+  --s-arrived:#0F7C8A; --s-arrived-bg:#DCF5F7;
+  --s-progress:#7A3BE0; --s-progress-bg:#F1E9FE;
+  --s-done:#23773B; --s-done-bg:#E2F5DE;
+  --s-noshow:#9A650C; --s-noshow-bg:#FCF0D9;
+  --s-cancel:#B42318; --s-cancel-bg:#FBE5E2;
+  --s-neutral:#5B6660; --s-neutral-bg:#EEF1EE;
+  /* service colours (calendar) */
+  --svc-consult:#3FA66B; --svc-clean:#14A3B8; --svc-fill:#4A6CF0; --svc-extract:#E0607E; --svc-white:#E5A31A; --svc-check:#8B5CF6; --svc-canal:#F07B3F;
+  --radius:10px; --radius-lg:14px; --radius-sm:7px;
+  --shadow-sm:0 1px 2px rgba(16,34,29,.06); --shadow:0 1px 3px rgba(16,34,29,.06),0 6px 16px -6px rgba(16,34,29,.10);
+  --shadow-lg:0 24px 60px -12px rgba(16,34,29,.28),0 2px 6px rgba(16,34,29,.08);
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:Inter,system-ui,sans-serif;color:var(--foreground);-webkit-font-smoothing:antialiased;font-size:14px;line-height:1.45;font-feature-settings:"cv11","ss01"}
+.frame{position:relative;overflow:hidden;background:var(--background);flex:none}
+svg.i{width:16px;height:16px;flex:none;stroke-width:1.8}
+.i-sm svg.i, svg.i.sm{width:14px;height:14px}
+.i-lg svg.i, svg.i.lg{width:20px;height:20px}
+.row{display:flex;align-items:center}
+.col{display:flex;flex-direction:column}
+.gap4{gap:4px}.gap6{gap:6px}.gap8{gap:8px}.gap10{gap:10px}.gap12{gap:12px}.gap16{gap:16px}.gap20{gap:20px}.gap24{gap:24px}
+.grow{flex:1;min-width:0}.between{justify-content:space-between}.center{justify-content:center}
+.muted{color:var(--muted-foreground)}.xs{font-size:12px}.sm{font-size:13px}.md{font-size:15px}.lg{font-size:18px}
+.b5{font-weight:500}.b6{font-weight:600}.b7{font-weight:700}
+.num{font-variant-numeric:tabular-nums}
+.ellipsis{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+
+/* ---------- app shell ---------- */
+.app{display:flex;height:100%}
+.sidebar{width:236px;background:var(--sidebar);color:var(--sidebar-fg);display:flex;flex-direction:column;padding:16px 12px;gap:4px;flex:none}
+.logo{display:flex;align-items:center;gap:10px;padding:4px 8px 14px;color:#fff;font-weight:700;font-size:17px;letter-spacing:-.02em}
+.logo-mark{width:30px;height:30px;border-radius:9px;background:var(--brand-300);display:flex;align-items:center;justify-content:center;color:var(--brand-950)}
+.logo-mark svg{width:18px;height:18px;stroke-width:2.4}
+.clinic-card{background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.08);border-radius:10px;padding:10px 10px;display:flex;align-items:center;gap:10px;margin-bottom:10px}
+.clinic-card .av{width:30px;height:30px;border-radius:8px;background:#F4C9C9;color:#6B1F2A;font-weight:700;font-size:12px;display:flex;align-items:center;justify-content:center}
+.clinic-card .t{color:#fff;font-weight:600;font-size:13px}
+.clinic-card .s{color:var(--sidebar-muted);font-size:11.5px}
+.nav-label{font-size:11px;letter-spacing:.06em;text-transform:uppercase;color:var(--sidebar-muted);padding:12px 10px 6px;font-weight:600}
+.nav{display:flex;align-items:center;gap:10px;padding:8px 10px;border-radius:8px;font-size:13.5px;font-weight:500;color:var(--sidebar-fg);position:relative}
+.nav svg.i{color:var(--sidebar-muted)}
+.nav.active{background:var(--sidebar-active);color:#fff}
+.nav.active svg.i{color:var(--brand-300)}
+.nav.active::before{content:"";position:absolute;left:-12px;top:8px;bottom:8px;width:3px;border-radius:0 3px 3px 0;background:var(--brand-300)}
+.nav .kbd{margin-left:auto}
+.nav .count{margin-left:auto;font-size:11px;background:rgba(255,255,255,.08);padding:1px 7px;border-radius:99px;color:var(--sidebar-fg)}
+.setup-card{background:rgba(152,215,138,.10);border:1px solid rgba(152,215,138,.22);border-radius:10px;padding:11px 12px;margin:6px 0 4px}
+.setup-card .t{color:#fff;font-size:12.5px;font-weight:600}
+.progress{height:5px;background:rgba(255,255,255,.12);border-radius:9px;overflow:hidden;margin:8px 0 6px}
+.progress>div{height:100%;background:var(--brand-300);border-radius:9px}
+.sidebar .spacer{flex:1}
+.user{display:flex;align-items:center;gap:10px;padding:10px 8px 2px;border-top:1px solid rgba(255,255,255,.08);margin-top:6px}
+.avatar{width:32px;height:32px;border-radius:99px;background:var(--brand-200);color:var(--brand-950);font-weight:600;font-size:12px;display:flex;align-items:center;justify-content:center;flex:none}
+.avatar.sm{width:26px;height:26px;font-size:10.5px}
+.avatar.lg{width:56px;height:56px;font-size:19px}
+.avatar.pink{background:#F8D7DA;color:#7A2230}.avatar.blue{background:#DCE6FD;color:#1E3A8A}.avatar.amber{background:#FBEBC5;color:#7A4E07}.avatar.violet{background:#EBDDFD;color:#4C1D95}.avatar.teal{background:#CFF1F4;color:#0B5563}
+.lang{display:flex;background:rgba(255,255,255,.07);border-radius:7px;padding:2px;font-size:11px;font-weight:600;margin-left:auto}
+.lang span{padding:3px 7px;border-radius:5px;color:var(--sidebar-muted)}
+.lang span.on{background:rgba(255,255,255,.14);color:#fff}
+
+.main{flex:1;display:flex;flex-direction:column;min-width:0}
+.topbar{height:60px;display:flex;align-items:center;gap:12px;padding:0 28px;border-bottom:1px solid var(--border);background:var(--card);flex:none}
+.topbar h1{font-size:18px;font-weight:650;letter-spacing:-.015em}
+.crumb{font-size:13px;color:var(--muted-foreground);display:flex;align-items:center;gap:6px}
+.search{white-space:nowrap;display:flex;align-items:center;gap:8px;height:36px;padding:0 8px 0 12px;background:var(--muted);border:1px solid transparent;border-radius:9px;color:var(--muted-foreground);font-size:13px;width:300px}
+.kbd{font-size:11px;font-weight:600;color:var(--muted-foreground);background:var(--card);border:1px solid var(--border);border-bottom-width:2px;border-radius:5px;padding:0 5px;line-height:17px;font-family:Inter}
+.sidebar .kbd{background:rgba(255,255,255,.06);border-color:rgba(255,255,255,.1);color:var(--sidebar-muted)}
+.content{flex:1;padding:24px 28px;overflow:hidden;min-height:0}
+
+/* ---------- primitives ---------- */
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:7px;height:36px;padding:0 14px;border-radius:9px;font-size:13.5px;font-weight:600;border:1px solid var(--border);background:var(--card);color:var(--foreground);white-space:nowrap;box-shadow:var(--shadow-sm)}
+.btn.primary{background:var(--primary);border-color:var(--primary);color:#fff}
+.btn.mint{background:var(--brand-100);border-color:var(--brand-200);color:var(--brand-900)}
+.btn.dark{background:var(--brand-950);border-color:var(--brand-950);color:#fff}
+.btn.ghost{background:transparent;border-color:transparent;box-shadow:none}
+.btn.danger{color:var(--destructive)}
+.btn.sm{height:30px;padding:0 10px;font-size:12.5px;border-radius:7px}
+.btn.lg{height:46px;padding:0 20px;font-size:15px;border-radius:11px}
+.btn.xl{height:56px;padding:0 22px;font-size:16px;border-radius:12px}
+.btn.icon{width:36px;padding:0}.btn.sm.icon{width:30px}
+.card{background:var(--card);border:1px solid var(--border);border-radius:var(--radius-lg);box-shadow:var(--shadow-sm)}
+.card-h{display:flex;align-items:center;gap:10px;padding:16px 18px 12px}
+.card-h h3{font-size:14.5px;font-weight:650;letter-spacing:-.01em}
+.card-b{padding:0 18px 16px}
+.divider{height:1px;background:var(--border)}
+.badge{display:inline-flex;align-items:center;gap:5px;height:22px;padding:0 9px 0 7px;border-radius:99px;font-size:12px;font-weight:550;white-space:nowrap}
+.badge svg.i{width:13px;height:13px;stroke-width:2}
+.badge.booked{background:var(--s-booked-bg);color:var(--s-booked)}
+.badge.arrived{background:var(--s-arrived-bg);color:var(--s-arrived)}
+.badge.progress{background:var(--s-progress-bg);color:var(--s-progress)}
+.badge.done,.badge.paid{background:var(--s-done-bg);color:var(--s-done)}
+.badge.noshow,.badge.partial{background:var(--s-noshow-bg);color:var(--s-noshow)}
+.badge.cancel,.badge.unpaid{background:var(--s-cancel-bg);color:var(--s-cancel)}
+.badge.neutral{background:var(--s-neutral-bg);color:var(--s-neutral)}
+.dot{width:8px;height:8px;border-radius:99px;flex:none;display:inline-block}
+.chip{display:inline-flex;align-items:center;gap:6px;height:30px;padding:0 11px;border:1px solid var(--border);border-radius:8px;background:var(--card);font-size:12.5px;font-weight:500;color:var(--foreground)}
+.chip.on{background:var(--brand-950);border-color:var(--brand-950);color:#fff}
+.seg{display:inline-flex;background:var(--muted);border-radius:9px;padding:3px;gap:2px}
+.seg span{white-space:nowrap;padding:5px 12px;border-radius:7px;font-size:12.5px;font-weight:550;color:var(--muted-foreground)}
+.seg span.on{background:var(--card);color:var(--foreground);box-shadow:var(--shadow-sm)}
+.field{display:flex;flex-direction:column;gap:6px}
+.label{font-size:12.5px;font-weight:600;color:var(--foreground)}
+.label .req{color:var(--destructive)}
+.input{height:40px;border:1px solid var(--input);border-radius:9px;background:var(--card);display:flex;align-items:center;gap:8px;padding:0 12px;font-size:13.5px;color:var(--foreground)}
+.input.ph{color:#98A39E}
+.input.focus{border-color:var(--ring);box-shadow:0 0 0 3px rgba(63,166,107,.18)}
+.input.area{height:auto;min-height:84px;align-items:flex-start;padding:10px 12px;line-height:1.5}
+.hint{font-size:12px;color:var(--muted-foreground)}
+.tabs{display:flex;gap:22px;border-bottom:1px solid var(--border)}
+.tabs span{padding:10px 0 11px;font-size:13.5px;font-weight:550;color:var(--muted-foreground);position:relative;display:flex;align-items:center;gap:6px}
+.tabs span.on{color:var(--foreground)}
+.tabs span.on::after{content:"";position:absolute;left:0;right:0;bottom:-1px;height:2px;background:var(--brand-700);border-radius:2px}
+.tabs .n{font-size:11px;background:var(--muted);border-radius:99px;padding:0 6px;color:var(--muted-foreground)}
+
+/* DataTable */
+.table{width:100%;border-collapse:separate;border-spacing:0;font-size:13.5px}
+.table th{font-size:11.5px;font-weight:600;letter-spacing:.04em;text-transform:uppercase;color:var(--muted-foreground);text-align:left;padding:10px 12px;border-bottom:1px solid var(--border);background:#FAFBFA;white-space:nowrap}
+.table td{padding:0 12px;height:52px;border-bottom:1px solid var(--border);white-space:nowrap}
+.table tr.sel td{background:var(--brand-50)}
+.table td.r,.table th.r{text-align:right}
+.cb{width:16px;height:16px;border:1.5px solid #C4CEC7;border-radius:4.5px;background:#fff;display:inline-block;vertical-align:middle}
+.cb.on{background:var(--brand-700);border-color:var(--brand-700);position:relative}
+.money{font-variant-numeric:tabular-nums;font-weight:550}
+.neg{color:var(--s-cancel)}.pos{color:var(--s-done)}
+
+/* stat */
+.stat{padding:16px 18px}
+.stat .k{font-size:12.5px;color:var(--muted-foreground);font-weight:550;display:flex;align-items:center;gap:6px}
+.stat .v{font-size:26px;font-weight:700;letter-spacing:-.025em;margin-top:6px;font-variant-numeric:tabular-nums}
+.stat .d{font-size:12px;margin-top:4px;color:var(--muted-foreground)}
+.trend-up{color:var(--s-done);font-weight:600}
+
+/* drawer / overlays */
+.scrim{position:absolute;inset:0;background:rgba(14,35,31,.38)}
+.drawer{position:absolute;top:0;right:0;bottom:0;background:var(--card);box-shadow:var(--shadow-lg);display:flex;flex-direction:column;border-left:1px solid var(--border)}
+.drawer-h{display:flex;align-items:center;gap:10px;padding:16px 20px;border-bottom:1px solid var(--border)}
+.drawer-f{margin-top:auto;border-top:1px solid var(--border);padding:14px 20px;display:flex;gap:10px;align-items:center;background:#FBFCFB}
+.modal{position:absolute;background:var(--card);border-radius:16px;box-shadow:var(--shadow-lg);border:1px solid var(--border)}
+
+/* calendar */
+.cal{display:grid;position:relative}
+.cal-hours .h{height:64px;font-size:11.5px;color:var(--muted-foreground);text-align:right;padding-right:10px;transform:translateY(-7px)}
+.slot-line{position:absolute;left:0;right:0;border-top:1px solid var(--border)}
+.slot-line.half{border-top:1px dashed #EDF1ED}
+.appt{position:absolute;justify-content:center;left:6px;right:6px;border-radius:9px;padding:7px 10px;font-size:12.5px;overflow:hidden;border:1px solid transparent;display:flex;flex-direction:column;gap:2px}
+.appt .t{font-weight:650;color:var(--foreground);font-size:12.5px}
+.appt .m{font-size:11.5px;color:var(--muted-foreground)}
+.appt::before{content:"";position:absolute;left:0;top:0;bottom:0;width:4px}
+.appt.sel{box-shadow:0 0 0 2px var(--brand-700),var(--shadow);}
+.now-line{position:absolute;left:0;right:0;height:2px;background:#E0485F}
+.now-line::before{content:"";position:absolute;left:-5px;top:-4px;width:10px;height:10px;border-radius:99px;background:#E0485F}
+
+/* misc */
+.kv{display:grid;grid-template-columns:130px 1fr;row-gap:10px;font-size:13.5px}
+.kv .k{color:var(--muted-foreground)}
+.pill-tab{display:inline-flex;align-items:center;gap:6px}
+.hr-dash{border-top:1px dashed var(--border)}
+.timeline{position:relative}
+.tl-item{display:flex;gap:12px;position:relative;padding-bottom:16px}
+.tl-dot{width:26px;height:26px;border-radius:99px;display:flex;align-items:center;justify-content:center;flex:none;z-index:1}
+.tl-dot svg.i{width:13px;height:13px;stroke-width:2.2}
+.tl-line{position:absolute;left:12.5px;top:26px;bottom:0;width:1px;background:var(--border)}
+.icon-tile{width:36px;height:36px;border-radius:10px;display:flex;align-items:center;justify-content:center;flex:none}
+.note{font-size:11px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:var(--muted-foreground)}
+</style></head><body style="margin:0;background:#fff"><div class="frame" data-name="06 Receipt issued" style="width:1440px;height:900px"><div class="app"><aside class="sidebar">
+  <div class="logo"><div class="logo-mark"><svg class="i "xmlns="http://www.w3.org/2000/svg"viewBox="0 0 24 24"fill="none"stroke="currentColor"stroke-width="2"stroke-linecap="round"stroke-linejoin="round"><path d="M22 12h-2.48a2 2 0 0 0-1.93 1.46l-2.35 8.36a.25.25 0 0 1-.48 0L9.24 2.18a.25.25 0 0 0-.48 0l-2.35 8.36A2 2 0 0 1 4.49 12H2" /></svg></div>ClinicFlow</div>
+  <div class="clinic-card"><div class="av">KH</div><div class="grow"><div class="t ellipsis">Klinika Dentare Hoxha</div><div class="s">Tiranë · Owner</div></div><svg class="i sm"xmlns="http://www.w3.org/2000/svg"viewBox="0 0 24 24"fill="none"stroke="currentColor"stroke-width="2"stroke-linecap="round"stroke-linejoin="round"><path d="m7 15 5 5 5-5" /><path d="m7 9 5-5 5 5" /></svg></div>
+  <div class="nav"><svg class="i "xmlns="http://www.w3.org/2000/svg"viewBox="0 0 24 24"fill="none"stroke="currentColor"stroke-width="2"stroke-linecap="round"stroke-linejoin="round"><path d="m21 21-4.34-4.34" /><circle cx="11" cy="11" r="8" /></svg><span>Search</span><span class="kbd" style="margin-left:auto">⌘K</span></div>
+  <div class="nav "><svg class="i "xmlns="http://www.w3.org/2000/svg"viewBox="0 0 24 24"fill="none"stroke="currentColor"stroke-width="2"stroke-linecap="round"stroke-linejoin="round"><rect width="7" height="9" x="3" y="3" rx="1" /><rect width="7" height="5" x="14" y="3" rx="1" /><rect width="7" height="9" x="14" y="12" rx="1" /><rect width="7" height="5" x="3" y="16" rx="1" /></svg><span>Dashboard</span></div>
+  <div class="nav active"><svg class="i "xmlns="http://www.w3.org/2000/svg"viewBox="0 0 24 24"fill="none"stroke="currentColor"stroke-width="2"stroke-linecap="round"stroke-linejoin="round"><path d="M8 2v3" /><path d="M16 2v3" /><rect x="3" y="3" width="18" height="18" rx="2" /><path d="M3 9h18" /><path d="M8 13h.01" /><path d="M12 13h.01" /><path d="M16 13h.01" /><path d="M8 17h.01" /><path d="M12 17h.01" /><path d="M16 17h.01" /></svg><span>Calendar</span><span class="count">9</span></div>
+  <div class="nav "><svg class="i "xmlns="http://www.w3.org/2000/svg"viewBox="0 0 24 24"fill="none"stroke="currentColor"stroke-width="2"stroke-linecap="round"stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2" /><path d="M16 3.128a4 4 0 0 1 0 7.744" /><path d="M22 21v-2a4 4 0 0 0-3-3.87" /><circle cx="9" cy="7" r="4" /></svg><span>Patients</span></div>
+  <div class="nav "><svg class="i "xmlns="http://www.w3.org/2000/svg"viewBox="0 0 24 24"fill="none"stroke="currentColor"stroke-width="2"stroke-linecap="round"stroke-linejoin="round"><path d="M19 7V4a1 1 0 0 0-1-1H5a2 2 0 0 0 0 4h15a1 1 0 0 1 1 1v4h-3a2 2 0 0 0 0 4h3a1 1 0 0 0 1-1v-2a1 1 0 0 0-1-1" /><path d="M3 5v14a2 2 0 0 0 2 2h15a1 1 0 0 0 1-1v-4" /></svg><span>Finances</span><span class="count" style="background:rgba(224,96,126,.18);color:#F5B3C2">4</span></div>
+  <div class="nav-label">Clinic</div>
+  <div class="nav "><svg class="i "xmlns="http://www.w3.org/2000/svg"viewBox="0 0 24 24"fill="none"stroke="currentColor"stroke-width="2"stroke-linecap="round"stroke-linejoin="round"><path d="M11 2v2" /><path d="M5 2v2" /><path d="M5 3H4a2 2 0 0 0-2 2v4a6 6 0 0 0 12 0V5a2 2 0 0 0-2-2h-1" /><path d="M8 15a6 6 0 0 0 12 0v-3" /><circle cx="20" cy="10" r="2" /></svg><span>Services</span></div><div class="nav "><svg class="i "xmlns="http://www.w3.org/2000/svg"viewBox="0 0 24 24"fill="none"stroke="currentColor"stroke-width="2"stroke-linecap="round"stroke-linejoin="round"><path d="M9.671 4.136a2.34 2.34 0 0 1 4.659 0 2.34 2.34 0 0 0 3.319 1.915 2.34 2.34 0 0 1 2.33 4.033 2.34 2.34 0 0 0 0 3.831 2.34 2.34 0 0 1-2.33 4.033 2.34 2.34 0 0 0-3.319 1.915 2.34 2.34 0 0 1-4.659 0 2.34 2.34 0 0 0-3.32-1.915 2.34 2.34 0 0 1-2.33-4.033 2.34 2.34 0 0 0 0-3.831A2.34 2.34 0 0 1 6.35 6.051a2.34 2.34 0 0 0 3.319-1.915" /><circle cx="12" cy="12" r="3" /></svg><span>Settings</span></div>
+  <div class="spacer"></div>
+  <div class="setup-card"><div class="row between"><span class="t">Finish setting up</span><svg class="i sm"xmlns="http://www.w3.org/2000/svg"viewBox="0 0 24 24"fill="none"stroke="currentColor"stroke-width="2"stroke-linecap="round"stroke-linejoin="round"><path d="m9 18 6-6-6-6" /></svg></div><div class="progress"><div style="width:80%"></div></div><div class="xs" style="color:var(--sidebar-muted)">4 / 5 completed</div></div>
+  <div class="user"><div class="avatar sm">EH</div><div class="grow" style="min-width:0"><div class="ellipsis" style="color:#fff;font-size:13px;font-weight:600">Dr. Elira Hoxha</div><div class="xs ellipsis" style="color:var(--sidebar-muted)">elira@hoxha.al</div></div><div class="lang"><span class="on">EN</span><span class="">SQ</span></div></div>
+</aside><div class="main">
+<header class="topbar" style="gap:10px">
+  <h1 style="margin-right:8px">Calendar</h1>
+  <div class="btn sm">Today</div><div class="btn sm icon"><svg class="i sm"xmlns="http://www.w3.org/2000/svg"viewBox="0 0 24 24"fill="none"stroke="currentColor"stroke-width="2"stroke-linecap="round"stroke-linejoin="round"><path d="m15 18-6-6 6-6" /></svg></div><div class="btn sm icon"><svg class="i sm"xmlns="http://www.w3.org/2000/svg"viewBox="0 0 24 24"fill="none"stroke="currentColor"stroke-width="2"stroke-linecap="round"stroke-linejoin="round"><path d="m9 18 6-6-6-6" /></svg></div>
+  <span class="b6" style="font-size:15px;margin-left:4px">Monday, 28 September 2026</span>
+  <div class="grow"></div>
+  <div class="seg"><span class="on">Day</span><span>Week</span></div>
+  <div class="btn"><svg class="i "xmlns="http://www.w3.org/2000/svg"viewBox="0 0 24 24"fill="none"stroke="currentColor"stroke-width="2"stroke-linecap="round"stroke-linejoin="round"><path d="M4 16v-2.38C4 11.5 2.97 10.5 3 8c.03-2.72 1.49-6 4.5-6C9.37 2 10 3.8 10 5.5c0 3.11-2 5.66-2 8.68V16a2 2 0 1 1-4 0Z" /><path d="M20 20v-2.38c0-2.12 1.03-3.12 1-5.62-.03-2.72-1.49-6-4.5-6C14.63 6 14 7.8 14 9.5c0 3.11 2 5.66 2 8.68V20a2 2 0 1 0 4 0Z" /><path d="M16 17h4" /><path d="M4 13h4" /></svg>Walk-in</div>
+  <div class="btn primary"><svg class="i "xmlns="http://www.w3.org/2000/svg"viewBox="0 0 24 24"fill="none"stroke="currentColor"stroke-width="2"stroke-linecap="round"stroke-linejoin="round"><path d="M5 12h14" /><path d="M12 5v14" /></svg>New</div>
+</header>
+<div class="content row gap16" style="padding:16px 20px;align-items:stretch">
+  <div class="col grow" style="min-width:0"><div class="row gap16 xs" style="padding:0 2px 12px;flex:none">
+  <div class="seg" style="padding:2px"><span style="padding:3px 10px" class="on">Colour: Service</span><span style="padding:3px 10px">Status</span></div>
+  <span class="row gap6 muted"><span class="dot" style="background:var(--svc-consult)"></span>Konsultë</span><span class="row gap6 muted"><span class="dot" style="background:var(--svc-clean)"></span>Pastrim</span><span class="row gap6 muted"><span class="dot" style="background:var(--svc-fill)"></span>Mbushje</span><span class="row gap6 muted"><span class="dot" style="background:var(--svc-extract)"></span>Nxjerrje</span><span class="row gap6 muted"><span class="dot" style="background:var(--svc-white)"></span>Zbardhim</span><span class="row gap6 muted"><span class="dot" style="background:var(--svc-check)"></span>Kontroll</span><span class="row gap6 muted"><span class="dot" style="background:var(--svc-canal)"></span>Kanal</span>
+  
+</div>
+  <div class="card" style="flex:1;min-width:0;overflow:hidden;display:flex;flex-direction:column;border-radius:12px">
+    <div class="row" style="border-bottom:1px solid var(--border);height:58px;flex:none">
+      <div style="width:58px"></div>
+      
+      <div class="row gap10" style="width:343px;padding:0 14px;border-left:1px solid var(--border);height:100%"><div class="avatar sm ">EH</div><div><div class="sm b6">Dr. Elira Hoxha</div><div class="xs muted">Dentist · 7 appts</div></div></div>
+      <div class="row gap10" style="width:343px;padding:0 14px;border-left:1px solid var(--border);height:100%"><div class="avatar sm violet">BK</div><div><div class="sm b6">Besa Kola</div><div class="xs muted">Hygienist · 4 appts</div></div></div>
+    </div>
+    <div class="row" style="align-items:flex-start;padding-top:8px;position:relative">
+      <div style="width:58px;flex:none"><div class="xs muted num" style="height:74px;text-align:right;padding-right:10px;transform:translateY(-7px)">08:00</div><div class="xs muted num" style="height:74px;text-align:right;padding-right:10px;transform:translateY(-7px)">09:00</div><div class="xs muted num" style="height:74px;text-align:right;padding-right:10px;transform:translateY(-7px)">10:00</div><div class="xs muted num" style="height:74px;text-align:right;padding-right:10px;transform:translateY(-7px)">11:00</div><div class="xs muted num" style="height:74px;text-align:right;padding-right:10px;transform:translateY(-7px)">12:00</div><div class="xs muted num" style="height:74px;text-align:right;padding-right:10px;transform:translateY(-7px)">13:00</div><div class="xs muted num" style="height:74px;text-align:right;padding-right:10px;transform:translateY(-7px)">14:00</div><div class="xs muted num" style="height:74px;text-align:right;padding-right:10px;transform:translateY(-7px)">15:00</div><div class="xs muted num" style="height:74px;text-align:right;padding-right:10px;transform:translateY(-7px)">16:00</div><div class="xs muted num" style="height:74px;text-align:right;padding-right:10px;transform:translateY(-7px)">17:00</div></div>
+      
+    <div style="position:relative;width:343px;height:666px;border-left:1px solid var(--border)">
+      <div class="slot-line" style="top:0px"></div><div class="slot-line half" style="top:37px"></div><div class="slot-line" style="top:74px"></div><div class="slot-line half" style="top:111px"></div><div class="slot-line" style="top:148px"></div><div class="slot-line half" style="top:185px"></div><div class="slot-line" style="top:222px"></div><div class="slot-line half" style="top:259px"></div><div class="slot-line" style="top:296px"></div><div class="slot-line half" style="top:333px"></div><div class="slot-line" style="top:370px"></div><div class="slot-line half" style="top:407px"></div><div class="slot-line" style="top:444px"></div><div class="slot-line half" style="top:481px"></div><div class="slot-line" style="top:518px"></div><div class="slot-line half" style="top:555px"></div><div class="slot-line" style="top:592px"></div><div class="slot-line half" style="top:629px"></div><div class="slot-line" style="top:666px"></div><div class="slot-line half" style="top:703px"></div>
+      <div style="position:absolute;left:0;right:0;top:407px;height:37px;background:repeating-linear-gradient(135deg,#F1F4F0 0 6px,#F8FAF7 6px 12px);display:flex;align-items:center;justify-content:center" class="xs muted"><svg class="i sm"xmlns="http://www.w3.org/2000/svg"viewBox="0 0 24 24"fill="none"stroke="currentColor"stroke-width="2"stroke-linecap="round"stroke-linejoin="round"><path d="M10 2v2" /><path d="M14 2v2" /><path d="M16 8a1 1 0 0 1 1 1v8a4 4 0 0 1-4 4H7a4 4 0 0 1-4-4V9a1 1 0 0 1 1-1h14a4 4 0 1 1 0 8h-1" /><path d="M6 2v2" /></svg>&nbsp;Lunch break</div>
+      <div class="appt " style="top:39px;height:33px;background:color-mix(in srgb, var(--svc-check) 13%, white);opacity:.72;">
+          <span style="position:absolute;left:0;top:0;bottom:0;width:4px;background:var(--svc-check)"></span>
+          <div class="row gap6"><span class="t ellipsis" style="">Blerina Dervishi</span><span class="m ellipsis grow">08:30 · Kontroll</span><span style="color:var(--s-done)" class="row"><svg class="i sm"xmlns="http://www.w3.org/2000/svg"viewBox="0 0 24 24"fill="none"stroke="currentColor"stroke-width="2"stroke-linecap="round"stroke-linejoin="round"><circle cx="12" cy="12" r="10" /><path d="m16 9-5.5 5.5L8 12" /></svg></span></div>
+          
+          
+        </div><div class="appt " style="top:131.5px;height:33px;background:repeating-linear-gradient(135deg,#FBF6EA 0 6px,#fff 6px 12px);">
+          <span style="position:absolute;left:0;top:0;bottom:0;width:4px;background:var(--svc-consult)"></span>
+          <div class="row gap6"><span class="t ellipsis" style="text-decoration:line-through;color:var(--muted-foreground)">Klodiana Meta</span><span class="m ellipsis grow">09:45 · Konsultë</span><span style="color:var(--s-noshow)" class="row"><svg class="i sm"xmlns="http://www.w3.org/2000/svg"viewBox="0 0 24 24"fill="none"stroke="currentColor"stroke-width="2"stroke-linecap="round"stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2" /><circle cx="9" cy="7" r="4" /><line x1="17" x2="22" y1="8" y2="13" /><line x1="22" x2="17" y1="8" y2="13" /></svg></span></div>
+          
+          
+        </div><div class="appt " style="top:187px;height:51.5px;background:color-mix(in srgb, var(--svc-fill) 13%, white);">
+          <span style="position:absolute;left:0;top:0;bottom:0;width:4px;background:var(--svc-fill)"></span>
+          <div class="row gap6"><span class="t ellipsis" style="">Arta Hoxha</span><span class="grow"></span><span style="color:var(--s-progress)" class="row"><svg class="i sm"xmlns="http://www.w3.org/2000/svg"viewBox="0 0 24 24"fill="none"stroke="currentColor"stroke-width="2"stroke-linecap="round"stroke-linejoin="round"><path d="M21 12a9 9 0 1 1-6.219-8.56" /></svg></span></div>
+          <div class="m ellipsis">10:30–11:15 · Mbushje · tooth 36</div>
+          
+        </div><div class="appt " style="top:242.5px;height:70px;background:color-mix(in srgb, var(--svc-canal) 13%, white);">
+          <span style="position:absolute;left:0;top:0;bottom:0;width:4px;background:var(--svc-canal)"></span>
+          <div class="row gap6"><span class="t ellipsis" style="">Ervin Shehu</span><span class="grow"></span><span style="color:var(--s-arrived)" class="row"><svg class="i sm"xmlns="http://www.w3.org/2000/svg"viewBox="0 0 24 24"fill="none"stroke="currentColor"stroke-width="2"stroke-linecap="round"stroke-linejoin="round"><path d="M10 21H2" /><path d="M10 3H7a2 2 0 00-2 2v16" /><path d="M14 12h.01" /><path d="M19 21V5a2 2 0 00-1.675-1.974l-6.163-1.013A1 1 0 0010 3v18a1 1 0 001.124.992z" /><path d="M22 21h-3" /></svg></span></div>
+          <div class="m ellipsis">11:15–12:15 · Kanal · session 2 of 3</div>
+          <div class="m" style="color:var(--s-arrived);font-weight:600">Waiting 6 min</div>
+        </div><div class="appt " style="top:353.5px;height:51.5px;background:color-mix(in srgb, var(--svc-consult) 13%, white);">
+          <span style="position:absolute;left:0;top:0;bottom:0;width:4px;background:var(--svc-consult)"></span>
+          <div class="row gap6"><span class="t ellipsis" style="">Donika Rama</span><span class="grow"></span></div>
+          <div class="m ellipsis">12:45–13:30 · Konsultë · + Pastrim</div>
+          
+        </div><div class="appt " style="top:557px;height:33px;background:color-mix(in srgb, var(--svc-check) 13%, white);">
+          <span style="position:absolute;left:0;top:0;bottom:0;width:4px;background:var(--svc-check)"></span>
+          <div class="row gap6"><span class="t ellipsis" style="">Luan Bregu</span><span class="m ellipsis grow">15:30 · Kontroll</span></div>
+          
+          
+        </div><div class="appt " style="top:612.5px;height:51.5px;background:color-mix(in srgb, var(--svc-extract) 13%, white);">
+          <span style="position:absolute;left:0;top:0;bottom:0;width:4px;background:var(--svc-extract)"></span>
+          <div class="row gap6"><span class="t ellipsis" style="">Sokol Duka</span><span class="grow"></span></div>
+          <div class="m ellipsis">16:15–17:00 · Nxjerrje · tooth 48</div>
+          
+        </div>
+    </div>
+    <div style="position:relative;width:343px;height:666px;border-left:1px solid var(--border)">
+      <div class="slot-line" style="top:0px"></div><div class="slot-line half" style="top:37px"></div><div class="slot-line" style="top:74px"></div><div class="slot-line half" style="top:111px"></div><div class="slot-line" style="top:148px"></div><div class="slot-line half" style="top:185px"></div><div class="slot-line" style="top:222px"></div><div class="slot-line half" style="top:259px"></div><div class="slot-line" style="top:296px"></div><div class="slot-line half" style="top:333px"></div><div class="slot-line" style="top:370px"></div><div class="slot-line half" style="top:407px"></div><div class="slot-line" style="top:444px"></div><div class="slot-line half" style="top:481px"></div><div class="slot-line" style="top:518px"></div><div class="slot-line half" style="top:555px"></div><div class="slot-line" style="top:592px"></div><div class="slot-line half" style="top:629px"></div><div class="slot-line" style="top:666px"></div><div class="slot-line half" style="top:703px"></div>
+      <div style="position:absolute;left:0;right:0;top:407px;height:37px;background:repeating-linear-gradient(135deg,#F1F4F0 0 6px,#F8FAF7 6px 12px);display:flex;align-items:center;justify-content:center" class="xs muted"><svg class="i sm"xmlns="http://www.w3.org/2000/svg"viewBox="0 0 24 24"fill="none"stroke="currentColor"stroke-width="2"stroke-linecap="round"stroke-linejoin="round"><path d="M10 2v2" /><path d="M14 2v2" /><path d="M16 8a1 1 0 0 1 1 1v8a4 4 0 0 1-4 4H7a4 4 0 0 1-4-4V9a1 1 0 0 1 1-1h14a4 4 0 1 1 0 8h-1" /><path d="M6 2v2" /></svg>&nbsp;Lunch break</div>
+      <div class="appt " style="top:76px;height:51.5px;background:color-mix(in srgb, var(--svc-clean) 13%, white);opacity:.72;">
+          <span style="position:absolute;left:0;top:0;bottom:0;width:4px;background:var(--svc-clean)"></span>
+          <div class="row gap6"><span class="t ellipsis" style="">Gentian Leka</span><span class="grow"></span><span style="color:var(--s-done)" class="row"><svg class="i sm"xmlns="http://www.w3.org/2000/svg"viewBox="0 0 24 24"fill="none"stroke="currentColor"stroke-width="2"stroke-linecap="round"stroke-linejoin="round"><circle cx="12" cy="12" r="10" /><path d="m16 9-5.5 5.5L8 12" /></svg></span></div>
+          <div class="m ellipsis">09:00–09:45 · Pastrim</div>
+          
+        </div><div class="appt " style="top:150px;height:51.5px;background:color-mix(in srgb, var(--svc-clean) 13%, white);opacity:.72;">
+          <span style="position:absolute;left:0;top:0;bottom:0;width:4px;background:var(--svc-clean)"></span>
+          <div class="row gap6"><span class="t ellipsis" style="">Iris Basha</span><span class="grow"></span><span style="color:var(--s-done)" class="row"><svg class="i sm"xmlns="http://www.w3.org/2000/svg"viewBox="0 0 24 24"fill="none"stroke="currentColor"stroke-width="2"stroke-linecap="round"stroke-linejoin="round"><circle cx="12" cy="12" r="10" /><path d="m16 9-5.5 5.5L8 12" /></svg></span></div>
+          <div class="m ellipsis">10:00–10:45 · Pastrim</div>
+          
+        </div><div class="appt " style="top:298px;height:70px;background:color-mix(in srgb, var(--svc-white) 13%, white);">
+          <span style="position:absolute;left:0;top:0;bottom:0;width:4px;background:var(--svc-white)"></span>
+          <div class="row gap6"><span class="t ellipsis" style="">Mirela Kola</span><span class="grow"></span></div>
+          <div class="m ellipsis">12:00–13:00 · Zbardhim</div>
+          
+        </div><div class="appt " style="top:483px;height:51.5px;background:color-mix(in srgb, var(--svc-clean) 13%, white);">
+          <span style="position:absolute;left:0;top:0;bottom:0;width:4px;background:var(--svc-clean)"></span>
+          <div class="row gap6"><span class="t ellipsis" style="">Ana Prifti</span><span class="grow"></span></div>
+          <div class="m ellipsis">14:30–15:15 · Pastrim</div>
+          
+        </div>
+    </div>
+      <div class="now-line" style="top:215.2px;left:58px"></div>
+      <span style="position:absolute;left:6px;top:207.2px;background:#E0485F;color:#fff;font-size:10.5px;font-weight:700;padding:1px 5px;border-radius:5px">10:48</span>
+    </div>
+  </div></div>
+  
+<aside class="card col" style="width:404px;flex:none;border-radius:12px;overflow:hidden;box-shadow:var(--shadow)">
+  
+  <div style="padding:18px 20px 14px;border-bottom:1px solid var(--border)">
+    <div class="row gap8 xs muted" style="margin-bottom:12px"><span class="row gap6"><svg class="i sm"xmlns="http://www.w3.org/2000/svg"viewBox="0 0 24 24"fill="none"stroke="currentColor"stroke-width="2"stroke-linecap="round"stroke-linejoin="round"><path d="M8 2v3" /><path d="M16 2v3" /><rect x="3" y="3" width="18" height="18" rx="2" /><path d="M3 9h18" /></svg>10:30 – 11:15 · Dr. Elira Hoxha</span><span class="grow"></span><span class="btn sm icon ghost"><svg class="i sm"xmlns="http://www.w3.org/2000/svg"viewBox="0 0 24 24"fill="none"stroke="currentColor"stroke-width="2"stroke-linecap="round"stroke-linejoin="round"><circle cx="12" cy="12" r="1" /><circle cx="19" cy="12" r="1" /><circle cx="5" cy="12" r="1" /></svg></span><span class="btn sm icon ghost"><svg class="i sm"xmlns="http://www.w3.org/2000/svg"viewBox="0 0 24 24"fill="none"stroke="currentColor"stroke-width="2"stroke-linecap="round"stroke-linejoin="round"><path d="M18 6 6 18" /><path d="m6 6 12 12" /></svg></span></div>
+    <div class="row gap12"><div class="avatar pink" style="width:44px;height:44px;font-size:15px">AH</div>
+      <div class="grow"><div class="b7" style="font-size:17px;letter-spacing:-.01em">Arta Hoxha</div><div class="xs muted">34 y · +355 69 412 3380 · Patient since 2024</div></div></div>
+    <div class="row gap8" style="margin-top:14px">
+      <div style="flex:1;background:var(--s-cancel-bg);border-radius:10px;padding:8px 12px"><div class="xs" style="color:var(--s-cancel);font-weight:600">Balance owed</div><div class="b7 num" style="color:var(--s-cancel);font-size:16px">ALL 2,000</div></div>
+      <div style="flex:1;background:var(--muted);border-radius:10px;padding:8px 12px"><div class="xs muted b6">Last visit</div><div class="b6 sm" style="margin-top:2px">14 Aug</div></div>
+      <div style="flex:1;background:#FEF3F2;border-radius:10px;padding:8px 12px"><div class="xs b6" style="color:#B42318">Alert</div><div class="b6 sm" style="margin-top:2px;color:#912018">Penicillin</div></div>
+    </div>
+  </div>
+  <div class="row" style="padding:14px 20px;gap:6px;border-bottom:1px solid var(--border)">
+  <div class="col gap6" style="flex:1"><div style="height:4px;border-radius:4px;background:var(--brand-500)"></div><span class="xs muted">Booked</span></div><div class="col gap6" style="flex:1"><div style="height:4px;border-radius:4px;background:var(--brand-500)"></div><span class="xs muted">Arrived</span></div><div class="col gap6" style="flex:1"><div style="height:4px;border-radius:4px;background:var(--brand-500)"></div><span class="xs b6">In progress</span></div><div class="col gap6" style="flex:1"><div style="height:4px;border-radius:4px;background:var(--muted)"></div><span class="xs muted">Completed</span></div>
+</div>
+  <div class="col gap16" style="padding:16px 20px;flex:1">
+    <div class="field"><span class="label">Service</span>
+      <div class="input" style="height:46px"><span class="dot" style="background:var(--svc-fill)"></span><span class="grow b5">Mbushje kompozit · 45 min</span><span class="money muted">ALL 6,000</span><svg class="i sm"xmlns="http://www.w3.org/2000/svg"viewBox="0 0 24 24"fill="none"stroke="currentColor"stroke-width="2"stroke-linecap="round"stroke-linejoin="round"><path d="m6 9 6 6 6-6" /></svg></div></div>
+    <div class="field"><div class="row between"><span class="label">Visit note</span><span class="xs muted row gap4"><svg class="i sm"xmlns="http://www.w3.org/2000/svg"viewBox="0 0 24 24"fill="none"stroke="currentColor"stroke-width="2"stroke-linecap="round"stroke-linejoin="round"><path d="M12 19v3" /><path d="M19 10v2a7 7 0 0 1-14 0v-2" /><rect x="9" y="2" width="6" height="13" rx="3" /></svg>Dictate</span></div>
+      <div class="input area" style="min-height:112px">Composite filling on 36, occlusal. Local anaesthetic (articaine 1 carp.). No complications. Review in 6 months.</div>
+      <div class="row gap6" style="flex-wrap:wrap"><span class="chip" style="height:28px;font-size:12px">+ Anaesthetic</span><span class="chip" style="height:28px;font-size:12px">+ X-ray taken</span><span class="chip" style="height:28px;font-size:12px">+ Follow-up 6 mo</span><span class="chip" style="height:28px;font-size:12px">+ Prescription</span></div></div>
+    <div class="field"><span class="label">Next visit</span>
+      <div class="row gap8"><span class="chip " style="flex:1;justify-content:center;height:36px">2 weeks</span><span class="chip " style="flex:1;justify-content:center;height:36px">1 month</span><span class="chip on" style="flex:1;justify-content:center;height:36px">6 months</span></div></div>
+  </div>
+  <div class="drawer-f col" style="align-items:stretch;gap:10px">
+    <div class="btn xl primary" style="width:100%"><svg class="i "xmlns="http://www.w3.org/2000/svg"viewBox="0 0 24 24"fill="none"stroke="currentColor"stroke-width="2"stroke-linecap="round"stroke-linejoin="round"><path d="M12 17V7" /><path d="M16 8h-6a2 2 0 0 0 0 4h4a2 2 0 0 1 0 4H8" /><path d="M4 3a1 1 0 0 1 1-1 1.3 1.3 0 0 1 .7.2l.933.6a1.3 1.3 0 0 0 1.4 0l.934-.6a1.3 1.3 0 0 1 1.4 0l.933.6a1.3 1.3 0 0 0 1.4 0l.933-.6a1.3 1.3 0 0 1 1.4 0l.934.6a1.3 1.3 0 0 0 1.4 0l.933-.6A1.3 1.3 0 0 1 19 2a1 1 0 0 1 1 1v18a1 1 0 0 1-1 1 1.3 1.3 0 0 1-.7-.2l-.933-.6a1.3 1.3 0 0 0-1.4 0l-.934.6a1.3 1.3 0 0 1-1.4 0l-.933-.6a1.3 1.3 0 0 0-1.4 0l-.933.6a1.3 1.3 0 0 1-1.4 0l-.934-.6a1.3 1.3 0 0 0-1.4 0l-.933.6a1.3 1.3 0 0 1-.7.2 1 1 0 0 1-1-1z" /></svg>Complete & charge<span style="opacity:.75;font-weight:500;margin-left:4px">ALL 6,000</span></div>
+    <div class="row gap8"><div class="btn grow"><svg class="i "xmlns="http://www.w3.org/2000/svg"viewBox="0 0 24 24"fill="none"stroke="currentColor"stroke-width="2"stroke-linecap="round"stroke-linejoin="round"><path d="M16 14v2.2l1.6 1" /><path d="M16 2v3" /><path d="M21 7.338V5a2 2 0 00-2-2H5a2 2 0 00-2 2v14a2 2 0 002 2h2.338" /><path d="M3 9h5.859" /><path d="M8 2v3" /><circle cx="16" cy="16" r="6" /></svg>Reschedule</div><div class="btn grow"><svg class="i "xmlns="http://www.w3.org/2000/svg"viewBox="0 0 24 24"fill="none"stroke="currentColor"stroke-width="2"stroke-linecap="round"stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2" /><circle cx="9" cy="7" r="4" /><line x1="17" x2="22" y1="8" y2="13" /><line x1="22" x2="17" y1="8" y2="13" /></svg>No-show</div><div class="btn icon"><svg class="i "xmlns="http://www.w3.org/2000/svg"viewBox="0 0 24 24"fill="none"stroke="currentColor"stroke-width="2"stroke-linecap="round"stroke-linejoin="round"><circle cx="12" cy="12" r="1" /><circle cx="19" cy="12" r="1" /><circle cx="5" cy="12" r="1" /></svg></div></div>
+  </div>
+</aside>
+</div></div></div><div class="scrim"></div>
+<div class="modal" style="left:50%;top:50%;transform:translate(-50%,-50%);width:760px;display:flex;overflow:hidden">
+  <div style="flex:1;background:#EEF1EE;padding:28px;display:flex;justify-content:center">
+    <div style="width:340px;background:#fff;border-radius:6px;box-shadow:0 6px 24px -6px rgba(0,0,0,.18);padding:26px 26px 22px;font-size:12px">
+      <div class="row between"><div class="row gap8"><div class="logo-mark" style="width:26px;height:26px;border-radius:7px;background:#F4C9C9;color:#6B1F2A;font-weight:700;font-size:11px">KH</div><div><div class="b7" style="font-size:12.5px">Klinika Dentare Hoxha</div><div class="muted" style="font-size:10.5px">Rr. Myslym Shyri 24, Tiranë · NIPT L81234567A</div></div></div></div>
+      <div class="row between" style="margin-top:20px"><div><div class="note" style="font-size:10px">Receipt / Mandat</div><div class="b7" style="font-size:16px;margin-top:2px">RC-2026-0042</div></div><div style="text-align:right" class="muted"><div>28.09.2026</div><div>10:52</div></div></div>
+      <div class="hr-dash" style="margin:14px 0"></div>
+      <div class="muted" style="font-size:10.5px">Patient</div><div class="b6">Arta Hoxha</div>
+      <div class="col gap6" style="margin-top:14px">
+        <div class="row between"><span>Mbushje kompozit (36)</span><span class="num">6,000</span></div>
+        <div class="row between"><span>Anestezi lokale</span><span class="num">500</span></div>
+        <div class="row between muted"><span>Previous balance</span><span class="num">2,000</span></div>
+      </div>
+      <div class="divider" style="margin:12px 0"></div>
+      <div class="row between b7" style="font-size:14px"><span>Paid · Cash</span><span class="num">ALL 8,500</span></div>
+      <div class="row between muted" style="margin-top:4px"><span>Balance after payment</span><span class="num">ALL 0</span></div>
+      <div class="muted" style="margin-top:18px;font-size:10px;text-align:center;line-height:1.5">Non-fiscal receipt · Faleminderit! · Next visit: March 2027</div>
+    </div>
+  </div>
+  <div style="width:300px;padding:24px;display:flex;flex-direction:column;gap:14px">
+    <div class="row gap10"><div class="icon-tile" style="background:var(--s-done-bg);color:var(--s-done)"><svg class="i "xmlns="http://www.w3.org/2000/svg"viewBox="0 0 24 24"fill="none"stroke="currentColor"stroke-width="2"stroke-linecap="round"stroke-linejoin="round"><circle cx="12" cy="12" r="10" /><path d="m16 9-5.5 5.5L8 12" /></svg></div><div><div class="b7 md">Payment recorded</div><div class="xs muted">Appointment completed</div></div></div>
+    <div class="sm muted" style="line-height:1.5">ALL 8,500 in cash. Arta's balance is now <b style="color:var(--s-done)">ALL 0</b>.</div>
+    <div class="col gap8" style="margin-top:4px">
+      <div class="btn lg primary" style="justify-content:flex-start"><svg class="i "xmlns="http://www.w3.org/2000/svg"viewBox="0 0 24 24"fill="none"stroke="currentColor"stroke-width="2"stroke-linecap="round"stroke-linejoin="round"><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2" /><path d="M6 9V3a1 1 0 0 1 1-1h10a1 1 0 0 1 1 1v6" /><rect x="6" y="14" width="12" height="8" rx="1" /></svg>Print receipt<span class="grow"></span><span class="kbd" style="background:rgba(255,255,255,.15);border-color:rgba(255,255,255,.25);color:#fff">P</span></div>
+      <div class="btn lg" style="justify-content:flex-start"><svg class="i "xmlns="http://www.w3.org/2000/svg"viewBox="0 0 24 24"fill="none"stroke="currentColor"stroke-width="2"stroke-linecap="round"stroke-linejoin="round"><path d="M2.992 16.342a2 2 0 0 1 .094 1.167l-1.065 3.29a1 1 0 0 0 1.236 1.168l3.413-.998a2 2 0 0 1 1.099.092 10 10 0 1 0-4.777-4.719" /></svg>Send via WhatsApp</div>
+      <div class="btn lg" style="justify-content:flex-start"><svg class="i "xmlns="http://www.w3.org/2000/svg"viewBox="0 0 24 24"fill="none"stroke="currentColor"stroke-width="2"stroke-linecap="round"stroke-linejoin="round"><path d="m22 7-8.991 5.727a2 2 0 0 1-2.009 0L2 7" /><rect x="2" y="4" width="20" height="16" rx="2" /></svg>Email PDF</div>
+      <div class="btn lg" style="justify-content:flex-start"><svg class="i "xmlns="http://www.w3.org/2000/svg"viewBox="0 0 24 24"fill="none"stroke="currentColor"stroke-width="2"stroke-linecap="round"stroke-linejoin="round"><path d="M12 15V3" /><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" /><path d="m7 10 5 5 5-5" /></svg>Download</div>
+    </div>
+    <div class="grow"></div>
+    <div class="row gap8"><div class="btn ghost grow">Undo</div><div class="btn grow">Done</div></div>
+  </div>
+</div></div></body></html>

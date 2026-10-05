@@ -1,0 +1,49 @@
+/* ClinicFlow — shadcn/ui theme tokens (paste into app/globals.css) */
+@layer base {
+  :root {
+    --background: 100 18% 97%; /* #F6F8F5 */
+    --foreground: 160 28% 10%; /* #13221D */
+    --card: 0 0% 100%; /* #FFFFFF */
+    --card-foreground: 160 28% 10%; /* #13221D */
+    --popover: 0 0% 100%; /* #FFFFFF */
+    --popover-foreground: 160 28% 10%; /* #13221D */
+    --primary: 157 56% 27%; /* #1E6B4E */
+    --primary-foreground: 0 0% 100%; /* #FFFFFF */
+    --secondary: 103 53% 89%; /* #DDF2D5 */
+    --secondary-foreground: 167 41% 13%; /* #14302A */
+    --muted: 108 17% 94%; /* #EFF3EE */
+    --muted-foreground: 154 6% 43%; /* #66746E */
+    --accent: 103 50% 95%; /* #EEF8EA */
+    --accent-foreground: 167 41% 13%; /* #14302A */
+    --destructive: 5 64% 46%; /* #C2382B */
+    --destructive-foreground: 0 0% 100%; /* #FFFFFF */
+    --border: 120 12% 90%; /* #E2E8E2 */
+    --input: 127 12% 87%; /* #D9E1DA */
+    --ring: 146 45% 45%; /* #3FA66B */
+    --sidebar: 167 41% 13%; /* #14302A */
+    --sidebar-foreground: 155 19% 82%; /* #C9DAD3 */
+    --sidebar-primary: 109 49% 69%; /* #98D78A */
+    --sidebar-accent: 165 36% 19%; /* #1F4239 */
+    --sidebar-border: 164 32% 21%; /* #24463D */
+    --status-booked: 224 68% 52%; /* #2F5BD8 */
+    --status-booked-bg: 221 85% 95%; /* #E7EEFD */
+    --status-arrived: 187 80% 30%; /* #0F7C8A */
+    --status-arrived-bg: 184 63% 92%; /* #DCF5F7 */
+    --status-progress: 263 73% 55%; /* #7A3BE0 */
+    --status-progress-bg: 263 91% 95%; /* #F1E9FE */
+    --status-done: 137 55% 30%; /* #23773B */
+    --status-done-bg: 110 53% 92%; /* #E2F5DE */
+    --status-noshow: 38 86% 33%; /* #9A650C */
+    --status-noshow-bg: 39 85% 92%; /* #FCF0D9 */
+    --status-cancel: 4 76% 40%; /* #B42318 */
+    --status-cancel-bg: 7 76% 94%; /* #FBE5E2 */
+    --svc-consult: 146 45% 45%; /* #3FA66B */
+    --svc-clean: 188 80% 40%; /* #14A3B8 */
+    --svc-fill: 228 85% 62%; /* #4A6CF0 */
+    --svc-extract: 346 67% 63%; /* #E0607E */
+    --svc-white: 40 80% 50%; /* #E5A31A */
+    --svc-check: 258 90% 66%; /* #8B5CF6 */
+    --svc-canal: 20 86% 59%; /* #F07B3F */
+    --radius: 0.625rem;
+  }
+}

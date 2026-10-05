@@ -1,0 +1,265 @@
+<!doctype html><html><head><meta charset="utf-8"><style>@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+/* ClinicFlow — design tokens (shadcn-compatible names) */
+:root{
+  --background:#F6F8F5; --card:#FFFFFF; --foreground:#13221D; --muted:#EFF3EE; --muted-foreground:#66746E;
+  --border:#E2E8E2; --input:#D9E1DA; --ring:#3FA66B;
+  --primary:#1E6B4E; --primary-hover:#185A41; --primary-foreground:#FFFFFF;
+  --brand-50:#EEF8EA; --brand-100:#DDF2D5; --brand-200:#BFE6B2; --brand-300:#98D78A; --brand-500:#3FA66B; --brand-700:#1E6B4E; --brand-900:#14302A; --brand-950:#0E231F;
+  --sidebar:#14302A; --sidebar-fg:#C9DAD3; --sidebar-muted:#86A298; --sidebar-active:#1F4239;
+  --destructive:#C2382B;
+  /* status */
+  --s-booked:#2F5BD8; --s-booked-bg:#E7EEFD;
+  --s-arrived:#0F7C8A; --s-arrived-bg:#DCF5F7;
+  --s-progress:#7A3BE0; --s-progress-bg:#F1E9FE;
+  --s-done:#23773B; --s-done-bg:#E2F5DE;
+  --s-noshow:#9A650C; --s-noshow-bg:#FCF0D9;
+  --s-cancel:#B42318; --s-cancel-bg:#FBE5E2;
+  --s-neutral:#5B6660; --s-neutral-bg:#EEF1EE;
+  /* service colours (calendar) */
+  --svc-consult:#3FA66B; --svc-clean:#14A3B8; --svc-fill:#4A6CF0; --svc-extract:#E0607E; --svc-white:#E5A31A; --svc-check:#8B5CF6; --svc-canal:#F07B3F;
+  --radius:10px; --radius-lg:14px; --radius-sm:7px;
+  --shadow-sm:0 1px 2px rgba(16,34,29,.06); --shadow:0 1px 3px rgba(16,34,29,.06),0 6px 16px -6px rgba(16,34,29,.10);
+  --shadow-lg:0 24px 60px -12px rgba(16,34,29,.28),0 2px 6px rgba(16,34,29,.08);
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:Inter,system-ui,sans-serif;color:var(--foreground);-webkit-font-smoothing:antialiased;font-size:14px;line-height:1.45;font-feature-settings:"cv11","ss01"}
+.frame{position:relative;overflow:hidden;background:var(--background);flex:none}
+svg.i{width:16px;height:16px;flex:none;stroke-width:1.8}
+.i-sm svg.i, svg.i.sm{width:14px;height:14px}
+.i-lg svg.i, svg.i.lg{width:20px;height:20px}
+.row{display:flex;align-items:center}
+.col{display:flex;flex-direction:column}
+.gap4{gap:4px}.gap6{gap:6px}.gap8{gap:8px}.gap10{gap:10px}.gap12{gap:12px}.gap16{gap:16px}.gap20{gap:20px}.gap24{gap:24px}
+.grow{flex:1;min-width:0}.between{justify-content:space-between}.center{justify-content:center}
+.muted{color:var(--muted-foreground)}.xs{font-size:12px}.sm{font-size:13px}.md{font-size:15px}.lg{font-size:18px}
+.b5{font-weight:500}.b6{font-weight:600}.b7{font-weight:700}
+.num{font-variant-numeric:tabular-nums}
+.ellipsis{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+
+/* ---------- app shell ---------- */
+.app{display:flex;height:100%}
+.sidebar{width:236px;background:var(--sidebar);color:var(--sidebar-fg);display:flex;flex-direction:column;padding:16px 12px;gap:4px;flex:none}
+.logo{display:flex;align-items:center;gap:10px;padding:4px 8px 14px;color:#fff;font-weight:700;font-size:17px;letter-spacing:-.02em}
+.logo-mark{width:30px;height:30px;border-radius:9px;background:var(--brand-300);display:flex;align-items:center;justify-content:center;color:var(--brand-950)}
+.logo-mark svg{width:18px;height:18px;stroke-width:2.4}
+.clinic-card{background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.08);border-radius:10px;padding:10px 10px;display:flex;align-items:center;gap:10px;margin-bottom:10px}
+.clinic-card .av{width:30px;height:30px;border-radius:8px;background:#F4C9C9;color:#6B1F2A;font-weight:700;font-size:12px;display:flex;align-items:center;justify-content:center}
+.clinic-card .t{color:#fff;font-weight:600;font-size:13px}
+.clinic-card .s{color:var(--sidebar-muted);font-size:11.5px}
+.nav-label{font-size:11px;letter-spacing:.06em;text-transform:uppercase;color:var(--sidebar-muted);padding:12px 10px 6px;font-weight:600}
+.nav{display:flex;align-items:center;gap:10px;padding:8px 10px;border-radius:8px;font-size:13.5px;font-weight:500;color:var(--sidebar-fg);position:relative}
+.nav svg.i{color:var(--sidebar-muted)}
+.nav.active{background:var(--sidebar-active);color:#fff}
+.nav.active svg.i{color:var(--brand-300)}
+.nav.active::before{content:"";position:absolute;left:-12px;top:8px;bottom:8px;width:3px;border-radius:0 3px 3px 0;background:var(--brand-300)}
+.nav .kbd{margin-left:auto}
+.nav .count{margin-left:auto;font-size:11px;background:rgba(255,255,255,.08);padding:1px 7px;border-radius:99px;color:var(--sidebar-fg)}
+.setup-card{background:rgba(152,215,138,.10);border:1px solid rgba(152,215,138,.22);border-radius:10px;padding:11px 12px;margin:6px 0 4px}
+.setup-card .t{color:#fff;font-size:12.5px;font-weight:600}
+.progress{height:5px;background:rgba(255,255,255,.12);border-radius:9px;overflow:hidden;margin:8px 0 6px}
+.progress>div{height:100%;background:var(--brand-300);border-radius:9px}
+.sidebar .spacer{flex:1}
+.user{display:flex;align-items:center;gap:10px;padding:10px 8px 2px;border-top:1px solid rgba(255,255,255,.08);margin-top:6px}
+.avatar{width:32px;height:32px;border-radius:99px;background:var(--brand-200);color:var(--brand-950);font-weight:600;font-size:12px;display:flex;align-items:center;justify-content:center;flex:none}
+.avatar.sm{width:26px;height:26px;font-size:10.5px}
+.avatar.lg{width:56px;height:56px;font-size:19px}
+.avatar.pink{background:#F8D7DA;color:#7A2230}.avatar.blue{background:#DCE6FD;color:#1E3A8A}.avatar.amber{background:#FBEBC5;color:#7A4E07}.avatar.violet{background:#EBDDFD;color:#4C1D95}.avatar.teal{background:#CFF1F4;color:#0B5563}
+.lang{display:flex;background:rgba(255,255,255,.07);border-radius:7px;padding:2px;font-size:11px;font-weight:600;margin-left:auto}
+.lang span{padding:3px 7px;border-radius:5px;color:var(--sidebar-muted)}
+.lang span.on{background:rgba(255,255,255,.14);color:#fff}
+
+.main{flex:1;display:flex;flex-direction:column;min-width:0}
+.topbar{height:60px;display:flex;align-items:center;gap:12px;padding:0 28px;border-bottom:1px solid var(--border);background:var(--card);flex:none}
+.topbar h1{font-size:18px;font-weight:650;letter-spacing:-.015em}
+.crumb{font-size:13px;color:var(--muted-foreground);display:flex;align-items:center;gap:6px}
+.search{white-space:nowrap;display:flex;align-items:center;gap:8px;height:36px;padding:0 8px 0 12px;background:var(--muted);border:1px solid transparent;border-radius:9px;color:var(--muted-foreground);font-size:13px;width:300px}
+.kbd{font-size:11px;font-weight:600;color:var(--muted-foreground);background:var(--card);border:1px solid var(--border);border-bottom-width:2px;border-radius:5px;padding:0 5px;line-height:17px;font-family:Inter}
+.sidebar .kbd{background:rgba(255,255,255,.06);border-color:rgba(255,255,255,.1);color:var(--sidebar-muted)}
+.content{flex:1;padding:24px 28px;overflow:hidden;min-height:0}
+
+/* ---------- primitives ---------- */
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:7px;height:36px;padding:0 14px;border-radius:9px;font-size:13.5px;font-weight:600;border:1px solid var(--border);background:var(--card);color:var(--foreground);white-space:nowrap;box-shadow:var(--shadow-sm)}
+.btn.primary{background:var(--primary);border-color:var(--primary);color:#fff}
+.btn.mint{background:var(--brand-100);border-color:var(--brand-200);color:var(--brand-900)}
+.btn.dark{background:var(--brand-950);border-color:var(--brand-950);color:#fff}
+.btn.ghost{background:transparent;border-color:transparent;box-shadow:none}
+.btn.danger{color:var(--destructive)}
+.btn.sm{height:30px;padding:0 10px;font-size:12.5px;border-radius:7px}
+.btn.lg{height:46px;padding:0 20px;font-size:15px;border-radius:11px}
+.btn.xl{height:56px;padding:0 22px;font-size:16px;border-radius:12px}
+.btn.icon{width:36px;padding:0}.btn.sm.icon{width:30px}
+.card{background:var(--card);border:1px solid var(--border);border-radius:var(--radius-lg);box-shadow:var(--shadow-sm)}
+.card-h{display:flex;align-items:center;gap:10px;padding:16px 18px 12px}
+.card-h h3{font-size:14.5px;font-weight:650;letter-spacing:-.01em}
+.card-b{padding:0 18px 16px}
+.divider{height:1px;background:var(--border)}
+.badge{display:inline-flex;align-items:center;gap:5px;height:22px;padding:0 9px 0 7px;border-radius:99px;font-size:12px;font-weight:550;white-space:nowrap}
+.badge svg.i{width:13px;height:13px;stroke-width:2}
+.badge.booked{background:var(--s-booked-bg);color:var(--s-booked)}
+.badge.arrived{background:var(--s-arrived-bg);color:var(--s-arrived)}
+.badge.progress{background:var(--s-progress-bg);color:var(--s-progress)}
+.badge.done,.badge.paid{background:var(--s-done-bg);color:var(--s-done)}
+.badge.noshow,.badge.partial{background:var(--s-noshow-bg);color:var(--s-noshow)}
+.badge.cancel,.badge.unpaid{background:var(--s-cancel-bg);color:var(--s-cancel)}
+.badge.neutral{background:var(--s-neutral-bg);color:var(--s-neutral)}
+.dot{width:8px;height:8px;border-radius:99px;flex:none;display:inline-block}
+.chip{display:inline-flex;align-items:center;gap:6px;height:30px;padding:0 11px;border:1px solid var(--border);border-radius:8px;background:var(--card);font-size:12.5px;font-weight:500;color:var(--foreground)}
+.chip.on{background:var(--brand-950);border-color:var(--brand-950);color:#fff}
+.seg{display:inline-flex;background:var(--muted);border-radius:9px;padding:3px;gap:2px}
+.seg span{white-space:nowrap;padding:5px 12px;border-radius:7px;font-size:12.5px;font-weight:550;color:var(--muted-foreground)}
+.seg span.on{background:var(--card);color:var(--foreground);box-shadow:var(--shadow-sm)}
+.field{display:flex;flex-direction:column;gap:6px}
+.label{font-size:12.5px;font-weight:600;color:var(--foreground)}
+.label .req{color:var(--destructive)}
+.input{height:40px;border:1px solid var(--input);border-radius:9px;background:var(--card);display:flex;align-items:center;gap:8px;padding:0 12px;font-size:13.5px;color:var(--foreground)}
+.input.ph{color:#98A39E}
+.input.focus{border-color:var(--ring);box-shadow:0 0 0 3px rgba(63,166,107,.18)}
+.input.area{height:auto;min-height:84px;align-items:flex-start;padding:10px 12px;line-height:1.5}
+.hint{font-size:12px;color:var(--muted-foreground)}
+.tabs{display:flex;gap:22px;border-bottom:1px solid var(--border)}
+.tabs span{padding:10px 0 11px;font-size:13.5px;font-weight:550;color:var(--muted-foreground);position:relative;display:flex;align-items:center;gap:6px}
+.tabs span.on{color:var(--foreground)}
+.tabs span.on::after{content:"";position:absolute;left:0;right:0;bottom:-1px;height:2px;background:var(--brand-700);border-radius:2px}
+.tabs .n{font-size:11px;background:var(--muted);border-radius:99px;padding:0 6px;color:var(--muted-foreground)}
+
+/* DataTable */
+.table{width:100%;border-collapse:separate;border-spacing:0;font-size:13.5px}
+.table th{font-size:11.5px;font-weight:600;letter-spacing:.04em;text-transform:uppercase;color:var(--muted-foreground);text-align:left;padding:10px 12px;border-bottom:1px solid var(--border);background:#FAFBFA;white-space:nowrap}
+.table td{padding:0 12px;height:52px;border-bottom:1px solid var(--border);white-space:nowrap}
+.table tr.sel td{background:var(--brand-50)}
+.table td.r,.table th.r{text-align:right}
+.cb{width:16px;height:16px;border:1.5px solid #C4CEC7;border-radius:4.5px;background:#fff;display:inline-block;vertical-align:middle}
+.cb.on{background:var(--brand-700);border-color:var(--brand-700);position:relative}
+.money{font-variant-numeric:tabular-nums;font-weight:550}
+.neg{color:var(--s-cancel)}.pos{color:var(--s-done)}
+
+/* stat */
+.stat{padding:16px 18px}
+.stat .k{font-size:12.5px;color:var(--muted-foreground);font-weight:550;display:flex;align-items:center;gap:6px}
+.stat .v{font-size:26px;font-weight:700;letter-spacing:-.025em;margin-top:6px;font-variant-numeric:tabular-nums}
+.stat .d{font-size:12px;margin-top:4px;color:var(--muted-foreground)}
+.trend-up{color:var(--s-done);font-weight:600}
+
+/* drawer / overlays */
+.scrim{position:absolute;inset:0;background:rgba(14,35,31,.38)}
+.drawer{position:absolute;top:0;right:0;bottom:0;background:var(--card);box-shadow:var(--shadow-lg);display:flex;flex-direction:column;border-left:1px solid var(--border)}
+.drawer-h{display:flex;align-items:center;gap:10px;padding:16px 20px;border-bottom:1px solid var(--border)}
+.drawer-f{margin-top:auto;border-top:1px solid var(--border);padding:14px 20px;display:flex;gap:10px;align-items:center;background:#FBFCFB}
+.modal{position:absolute;background:var(--card);border-radius:16px;box-shadow:var(--shadow-lg);border:1px solid var(--border)}
+
+/* calendar */
+.cal{display:grid;position:relative}
+.cal-hours .h{height:64px;font-size:11.5px;color:var(--muted-foreground);text-align:right;padding-right:10px;transform:translateY(-7px)}
+.slot-line{position:absolute;left:0;right:0;border-top:1px solid var(--border)}
+.slot-line.half{border-top:1px dashed #EDF1ED}
+.appt{position:absolute;justify-content:center;left:6px;right:6px;border-radius:9px;padding:7px 10px;font-size:12.5px;overflow:hidden;border:1px solid transparent;display:flex;flex-direction:column;gap:2px}
+.appt .t{font-weight:650;color:var(--foreground);font-size:12.5px}
+.appt .m{font-size:11.5px;color:var(--muted-foreground)}
+.appt::before{content:"";position:absolute;left:0;top:0;bottom:0;width:4px}
+.appt.sel{box-shadow:0 0 0 2px var(--brand-700),var(--shadow);}
+.now-line{position:absolute;left:0;right:0;height:2px;background:#E0485F}
+.now-line::before{content:"";position:absolute;left:-5px;top:-4px;width:10px;height:10px;border-radius:99px;background:#E0485F}
+
+/* misc */
+.kv{display:grid;grid-template-columns:130px 1fr;row-gap:10px;font-size:13.5px}
+.kv .k{color:var(--muted-foreground)}
+.pill-tab{display:inline-flex;align-items:center;gap:6px}
+.hr-dash{border-top:1px dashed var(--border)}
+.timeline{position:relative}
+.tl-item{display:flex;gap:12px;position:relative;padding-bottom:16px}
+.tl-dot{width:26px;height:26px;border-radius:99px;display:flex;align-items:center;justify-content:center;flex:none;z-index:1}
+.tl-dot svg.i{width:13px;height:13px;stroke-width:2.2}
+.tl-line{position:absolute;left:12.5px;top:26px;bottom:0;width:1px;background:var(--border)}
+.icon-tile{width:36px;height:36px;border-radius:10px;display:flex;align-items:center;justify-content:center;flex:none}
+.note{font-size:11px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:var(--muted-foreground)}
+</style></head><body style="margin:0;background:#fff"><div class="frame" data-name="02 Onboarding — Clinic type" style="width:1440px;height:900px">
+<div class="col" style="height:100%;background:#FAFBFA">
+  <div class="row" style="height:68px;padding:0 40px;border-bottom:1px solid var(--border);background:#fff">
+    <div class="row gap10" style="font-weight:700;font-size:17px;letter-spacing:-.02em;width:260px"><div class="logo-mark" style="background:var(--brand-900);color:var(--brand-300)"><svg class="i "xmlns="http://www.w3.org/2000/svg"viewBox="0 0 24 24"fill="none"stroke="currentColor"stroke-width="2"stroke-linecap="round"stroke-linejoin="round"><path d="M22 12h-2.48a2 2 0 0 0-1.93 1.46l-2.35 8.36a.25.25 0 0 1-.48 0L9.24 2.18a.25.25 0 0 0-.48 0l-2.35 8.36A2 2 0 0 1 4.49 12H2" /></svg></div>ClinicFlow</div>
+    <div class="grow row center gap8">
+      
+        <div class="row gap8" style=""><span style="width:24px;height:24px;border-radius:99px;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;background:var(--brand-900);color:#fff">1</span><span class="sm b6">Clinic type</span></div><div style="width:44px;height:1px;background:var(--border)"></div>
+        <div class="row gap8" style="color:var(--muted-foreground)"><span style="width:24px;height:24px;border-radius:99px;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;background:var(--muted)">2</span><span class="sm b6">Clinic details</span></div><div style="width:44px;height:1px;background:var(--border)"></div>
+        <div class="row gap8" style="color:var(--muted-foreground)"><span style="width:24px;height:24px;border-radius:99px;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;background:var(--muted)">3</span><span class="sm b6">Working hours</span></div><div style="width:44px;height:1px;background:var(--border)"></div>
+        <div class="row gap8" style="color:var(--muted-foreground)"><span style="width:24px;height:24px;border-radius:99px;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;background:var(--muted)">4</span><span class="sm b6">Services</span></div>
+    </div>
+    <div style="width:260px;text-align:right"><div class="seg"><span class="on">EN</span><span>SQ</span></div></div>
+  </div>
+  <div class="grow" style="padding:48px 0 0;display:flex;flex-direction:column;align-items:center">
+    <div class="note">Step 1 of 4</div>
+    <div style="font-size:28px;font-weight:700;letter-spacing:-.03em;margin-top:8px">What kind of clinic do you run?</div>
+    <div class="muted md" style="margin-top:8px">We'll pre-fill your services, prices and wording. You can change everything later.</div>
+    <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-top:36px;width:1040px">
+      
+      <div class="card" style="padding:20px;display:flex;align-items:center;gap:14px;position:relative;border:1.5px solid var(--brand-700);box-shadow:0 0 0 4px rgba(63,166,107,.12)">
+        <div style="width:52px;height:52px;border-radius:12px;background:var(--brand-100);color:var(--brand-700);display:flex;align-items:center;justify-content:center"><svg class="i lg"xmlns="http://www.w3.org/2000/svg"viewBox="0 0 24 24"fill="none"stroke="currentColor"stroke-width="2"stroke-linecap="round"stroke-linejoin="round"><path d="M15 10V9" /><path d="M16.472 15a6 6 0 01-8.943 0" /><path d="M9 10V9" /><circle cx="12" cy="12" r="10" /></svg></div>
+        <div class="grow"><div class="b6" style="font-size:14.5px">Stomatologji</div><div class="sm muted">Dentistry</div></div>
+        <span style="position:absolute;top:12px;right:12px;width:20px;height:20px;border-radius:99px;background:var(--brand-700);color:#fff;display:flex;align-items:center;justify-content:center"><svg class="i sm"xmlns="http://www.w3.org/2000/svg"viewBox="0 0 24 24"fill="none"stroke="currentColor"stroke-width="2"stroke-linecap="round"stroke-linejoin="round"><path d="M20 6 9 17l-5-5" /></svg></span>
+      </div>
+      <div class="card" style="padding:20px;display:flex;align-items:center;gap:14px;position:relative;">
+        <div style="width:52px;height:52px;border-radius:12px;background:#EEF6F7;color:#2C6E78;display:flex;align-items:center;justify-content:center"><svg class="i lg"xmlns="http://www.w3.org/2000/svg"viewBox="0 0 24 24"fill="none"stroke="currentColor"stroke-width="2"stroke-linecap="round"stroke-linejoin="round"><path d="M11 2v2" /><path d="M5 2v2" /><path d="M5 3H4a2 2 0 0 0-2 2v4a6 6 0 0 0 12 0V5a2 2 0 0 0-2-2h-1" /><path d="M8 15a6 6 0 0 0 12 0v-3" /><circle cx="20" cy="10" r="2" /></svg></div>
+        <div class="grow"><div class="b6" style="font-size:14.5px">Mjekësi e Përgjithshme</div><div class="sm muted">General practice</div></div>
+        
+      </div>
+      <div class="card" style="padding:20px;display:flex;align-items:center;gap:14px;position:relative;">
+        <div style="width:52px;height:52px;border-radius:12px;background:#EEF6F7;color:#2C6E78;display:flex;align-items:center;justify-content:center"><svg class="i lg"xmlns="http://www.w3.org/2000/svg"viewBox="0 0 24 24"fill="none"stroke="currentColor"stroke-width="2"stroke-linecap="round"stroke-linejoin="round"><path d="M10 16c.5.3 1.2.5 2 .5s1.5-.2 2-.5" /><path d="M15 12h.01" /><path d="M19.38 6.813A9 9 0 0 1 20.8 10.2a2 2 0 0 1 0 3.6 9 9 0 0 1-17.6 0 2 2 0 0 1 0-3.6A9 9 0 0 1 12 3c2 0 3.5 1.1 3.5 2.5s-.9 2.5-2 2.5c-.8 0-1.5-.4-1.5-1" /><path d="M9 12h.01" /></svg></div>
+        <div class="grow"><div class="b6" style="font-size:14.5px">Pediatri</div><div class="sm muted">Paediatrics</div></div>
+        
+      </div>
+      <div class="card" style="padding:20px;display:flex;align-items:center;gap:14px;position:relative;">
+        <div style="width:52px;height:52px;border-radius:12px;background:#EEF6F7;color:#2C6E78;display:flex;align-items:center;justify-content:center"><svg class="i lg"xmlns="http://www.w3.org/2000/svg"viewBox="0 0 24 24"fill="none"stroke="currentColor"stroke-width="2"stroke-linecap="round"stroke-linejoin="round"><path d="M12 15v7" /><path d="M9 19h6" /><circle cx="12" cy="9" r="6" /></svg></div>
+        <div class="grow"><div class="b6" style="font-size:14.5px">Gjinekologji</div><div class="sm muted">Gynaecology</div></div>
+        
+      </div>
+      <div class="card" style="padding:20px;display:flex;align-items:center;gap:14px;position:relative;">
+        <div style="width:52px;height:52px;border-radius:12px;background:#EEF6F7;color:#2C6E78;display:flex;align-items:center;justify-content:center"><svg class="i lg"xmlns="http://www.w3.org/2000/svg"viewBox="0 0 24 24"fill="none"stroke="currentColor"stroke-width="2"stroke-linecap="round"stroke-linejoin="round"><circle cx="16" cy="4" r="1" /><path d="m18 19 1-7-6 1" /><path d="m5 8 3-3 5.5 3-2.36 3.5" /><path d="M4.24 14.5a5 5 0 0 0 6.88 6" /><path d="M13.76 17.5a5 5 0 0 0-6.88-6" /></svg></div>
+        <div class="grow"><div class="b6" style="font-size:14.5px">Fizioterapi</div><div class="sm muted">Physiotherapy</div></div>
+        
+      </div>
+      <div class="card" style="padding:20px;display:flex;align-items:center;gap:14px;position:relative;">
+        <div style="width:52px;height:52px;border-radius:12px;background:#EEF6F7;color:#2C6E78;display:flex;align-items:center;justify-content:center"><svg class="i lg"xmlns="http://www.w3.org/2000/svg"viewBox="0 0 24 24"fill="none"stroke="currentColor"stroke-width="2"stroke-linecap="round"stroke-linejoin="round"><path d="M11.017 2.814a1 1 0 0 1 1.966 0l1.051 5.558a2 2 0 0 0 1.594 1.594l5.558 1.051a1 1 0 0 1 0 1.966l-5.558 1.051a2 2 0 0 0-1.594 1.594l-1.051 5.558a1 1 0 0 1-1.966 0l-1.051-5.558a2 2 0 0 0-1.594-1.594l-5.558-1.051a1 1 0 0 1 0-1.966l5.558-1.051a2 2 0 0 0 1.594-1.594z" /><path d="M20 2v4" /><path d="M22 4h-4" /><circle cx="4" cy="20" r="2" /></svg></div>
+        <div class="grow"><div class="b6" style="font-size:14.5px">Dermatologji</div><div class="sm muted">Dermatology</div></div>
+        
+      </div>
+      <div class="card" style="padding:20px;display:flex;align-items:center;gap:14px;position:relative;">
+        <div style="width:52px;height:52px;border-radius:12px;background:#EEF6F7;color:#2C6E78;display:flex;align-items:center;justify-content:center"><svg class="i lg"xmlns="http://www.w3.org/2000/svg"viewBox="0 0 24 24"fill="none"stroke="currentColor"stroke-width="2"stroke-linecap="round"stroke-linejoin="round"><path d="M2 9.5a5.5 5.5 0 0 1 9.591-3.676.56.56 0 0 0 .818 0A5.49 5.49 0 0 1 22 9.5c0 2.29-1.5 4-3 5.5l-5.492 5.313a2 2 0 0 1-3 .019L5 15c-1.5-1.5-3-3.2-3-5.5" /><path d="M3.22 13H9.5l.5-1 2 4.5 2-7 1.5 3.5h5.27" /></svg></div>
+        <div class="grow"><div class="b6" style="font-size:14.5px">Kardiologji</div><div class="sm muted">Cardiology</div></div>
+        
+      </div>
+      <div class="card" style="padding:20px;display:flex;align-items:center;gap:14px;position:relative;">
+        <div style="width:52px;height:52px;border-radius:12px;background:#EEF6F7;color:#2C6E78;display:flex;align-items:center;justify-content:center"><svg class="i lg"xmlns="http://www.w3.org/2000/svg"viewBox="0 0 24 24"fill="none"stroke="currentColor"stroke-width="2"stroke-linecap="round"stroke-linejoin="round"><path d="M2.062 12.348a1 1 0 0 1 0-.696 10.75 10.75 0 0 1 19.876 0 1 1 0 0 1 0 .696 10.75 10.75 0 0 1-19.876 0" /><circle cx="12" cy="12" r="3" /></svg></div>
+        <div class="grow"><div class="b6" style="font-size:14.5px">Okulistikë</div><div class="sm muted">Ophthalmology</div></div>
+        
+      </div>
+      <div class="card" style="padding:20px;display:flex;align-items:center;gap:14px;position:relative;">
+        <div style="width:52px;height:52px;border-radius:12px;background:#EEF6F7;color:#2C6E78;display:flex;align-items:center;justify-content:center"><svg class="i lg"xmlns="http://www.w3.org/2000/svg"viewBox="0 0 24 24"fill="none"stroke="currentColor"stroke-width="2"stroke-linecap="round"stroke-linejoin="round"><path d="M6 8.5a6.5 6.5 0 1 1 13 0c0 6-6 6-6 10a3.5 3.5 0 1 1-7 0" /><path d="M15 8.5a2.5 2.5 0 0 0-5 0v1a2 2 0 1 1 0 4" /></svg></div>
+        <div class="grow"><div class="b6" style="font-size:14.5px">ORL</div><div class="sm muted">Ear, nose & throat</div></div>
+        
+      </div>
+      <div class="card" style="padding:20px;display:flex;align-items:center;gap:14px;position:relative;">
+        <div style="width:52px;height:52px;border-radius:12px;background:#EEF6F7;color:#2C6E78;display:flex;align-items:center;justify-content:center"><svg class="i lg"xmlns="http://www.w3.org/2000/svg"viewBox="0 0 24 24"fill="none"stroke="currentColor"stroke-width="2"stroke-linecap="round"stroke-linejoin="round"><path d="M17 10c.7-.7 1.69 0 2.5 0a2.5 2.5 0 1 0 0-5 .5.5 0 0 1-.5-.5 2.5 2.5 0 1 0-5 0c0 .81.7 1.8 0 2.5l-7 7c-.7.7-1.69 0-2.5 0a2.5 2.5 0 0 0 0 5c.28 0 .5.22.5.5a2.5 2.5 0 1 0 5 0c0-.81-.7-1.8 0-2.5Z" /></svg></div>
+        <div class="grow"><div class="b6" style="font-size:14.5px">Ortopedi</div><div class="sm muted">Orthopaedics</div></div>
+        
+      </div>
+      <div class="card" style="padding:20px;display:flex;align-items:center;gap:14px;position:relative;">
+        <div style="width:52px;height:52px;border-radius:12px;background:#EEF6F7;color:#2C6E78;display:flex;align-items:center;justify-content:center"><svg class="i lg"xmlns="http://www.w3.org/2000/svg"viewBox="0 0 24 24"fill="none"stroke="currentColor"stroke-width="2"stroke-linecap="round"stroke-linejoin="round"><path d="M12 18V5" /><path d="M15 13a4.17 4.17 0 0 1-3-4 4.17 4.17 0 0 1-3 4" /><path d="M17.598 6.5A3 3 0 1 0 12 5a3 3 0 1 0-5.598 1.5" /><path d="M17.997 5.125a4 4 0 0 1 2.526 5.77" /><path d="M18 18a4 4 0 0 0 2-7.464" /><path d="M19.967 17.483A4 4 0 1 1 12 18a4 4 0 1 1-7.967-.517" /><path d="M6 18a4 4 0 0 1-2-7.464" /><path d="M6.003 5.125a4 4 0 0 0-2.526 5.77" /></svg></div>
+        <div class="grow"><div class="b6" style="font-size:14.5px">Psikologji</div><div class="sm muted">Psychology</div></div>
+        
+      </div>
+      <div class="card" style="padding:20px;display:flex;align-items:center;gap:14px;position:relative;">
+        <div style="width:52px;height:52px;border-radius:12px;background:#EEF6F7;color:#2C6E78;display:flex;align-items:center;justify-content:center"><svg class="i lg"xmlns="http://www.w3.org/2000/svg"viewBox="0 0 24 24"fill="none"stroke="currentColor"stroke-width="2"stroke-linecap="round"stroke-linejoin="round"><path d="M6 18h8" /><path d="M3 22h18" /><path d="M14 22a7 7 0 1 0 0-14h-1" /><path d="M9 14h2" /><path d="M9 12a2 2 0 0 1-2-2V6h6v4a2 2 0 0 1-2 2Z" /><path d="M12 6V3a1 1 0 0 0-1-1H9a1 1 0 0 0-1 1v3" /></svg></div>
+        <div class="grow"><div class="b6" style="font-size:14.5px">Laborator</div><div class="sm muted">Laboratory</div></div>
+        
+      </div>
+    </div>
+    <div class="card" style="width:1040px;margin-top:20px;padding:16px 20px;background:var(--brand-50);border-color:var(--brand-200)">
+      <div class="row gap12"><div class="icon-tile" style="background:#fff;color:var(--brand-700)"><svg class="i "xmlns="http://www.w3.org/2000/svg"viewBox="0 0 24 24"fill="none"stroke="currentColor"stroke-width="2"stroke-linecap="round"stroke-linejoin="round"><path d="m21.64 3.64-1.28-1.28a1.21 1.21 0 0 0-1.72 0L2.36 18.64a1.21 1.21 0 0 0 0 1.72l1.28 1.28a1.2 1.2 0 0 0 1.72 0L21.64 5.36a1.2 1.2 0 0 0 0-1.72" /><path d="m14 7 3 3" /><path d="M5 6v4" /><path d="M19 14v4" /><path d="M10 2v2" /><path d="M7 8H3" /><path d="M21 16h-4" /><path d="M11 3H9" /></svg></div>
+      <div class="grow"><div class="b6">Dentistry starter pack</div><div class="sm muted">7 services (Konsultë, Pastrim, Mbushje, Nxjerrje, Kanal, Zbardhim, Kontroll) · "Patient" and "Treatment" wording · 30-min default slot</div></div>
+      <span class="sm b6" style="color:var(--brand-700)">Preview</span></div>
+    </div>
+  </div>
+  <div class="row between" style="height:76px;padding:0 40px;border-top:1px solid var(--border);background:#fff">
+    <div class="btn ghost"><svg class="i "xmlns="http://www.w3.org/2000/svg"viewBox="0 0 24 24"fill="none"stroke="currentColor"stroke-width="2"stroke-linecap="round"stroke-linejoin="round"><path d="m12 19-7-7 7-7" /><path d="M19 12H5" /></svg>Back</div>
+    <div class="row gap10"><span class="sm muted">Not listed?</span><div class="btn">Other / custom</div><div class="btn primary" style="width:150px">Continue<svg class="i "xmlns="http://www.w3.org/2000/svg"viewBox="0 0 24 24"fill="none"stroke="currentColor"stroke-width="2"stroke-linecap="round"stroke-linejoin="round"><path d="M5 12h14" /><path d="m12 5 7 7-7 7" /></svg></div></div>
+  </div>
+</div></div></body></html>

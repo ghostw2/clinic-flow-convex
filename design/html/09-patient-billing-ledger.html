@@ -1,0 +1,312 @@
+<!doctype html><html><head><meta charset="utf-8"><style>@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+/* ClinicFlow — design tokens (shadcn-compatible names) */
+:root{
+  --background:#F6F8F5; --card:#FFFFFF; --foreground:#13221D; --muted:#EFF3EE; --muted-foreground:#66746E;
+  --border:#E2E8E2; --input:#D9E1DA; --ring:#3FA66B;
+  --primary:#1E6B4E; --primary-hover:#185A41; --primary-foreground:#FFFFFF;
+  --brand-50:#EEF8EA; --brand-100:#DDF2D5; --brand-200:#BFE6B2; --brand-300:#98D78A; --brand-500:#3FA66B; --brand-700:#1E6B4E; --brand-900:#14302A; --brand-950:#0E231F;
+  --sidebar:#14302A; --sidebar-fg:#C9DAD3; --sidebar-muted:#86A298; --sidebar-active:#1F4239;
+  --destructive:#C2382B;
+  /* status */
+  --s-booked:#2F5BD8; --s-booked-bg:#E7EEFD;
+  --s-arrived:#0F7C8A; --s-arrived-bg:#DCF5F7;
+  --s-progress:#7A3BE0; --s-progress-bg:#F1E9FE;
+  --s-done:#23773B; --s-done-bg:#E2F5DE;
+  --s-noshow:#9A650C; --s-noshow-bg:#FCF0D9;
+  --s-cancel:#B42318; --s-cancel-bg:#FBE5E2;
+  --s-neutral:#5B6660; --s-neutral-bg:#EEF1EE;
+  /* service colours (calendar) */
+  --svc-consult:#3FA66B; --svc-clean:#14A3B8; --svc-fill:#4A6CF0; --svc-extract:#E0607E; --svc-white:#E5A31A; --svc-check:#8B5CF6; --svc-canal:#F07B3F;
+  --radius:10px; --radius-lg:14px; --radius-sm:7px;
+  --shadow-sm:0 1px 2px rgba(16,34,29,.06); --shadow:0 1px 3px rgba(16,34,29,.06),0 6px 16px -6px rgba(16,34,29,.10);
+  --shadow-lg:0 24px 60px -12px rgba(16,34,29,.28),0 2px 6px rgba(16,34,29,.08);
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:Inter,system-ui,sans-serif;color:var(--foreground);-webkit-font-smoothing:antialiased;font-size:14px;line-height:1.45;font-feature-settings:"cv11","ss01"}
+.frame{position:relative;overflow:hidden;background:var(--background);flex:none}
+svg.i{width:16px;height:16px;flex:none;stroke-width:1.8}
+.i-sm svg.i, svg.i.sm{width:14px;height:14px}
+.i-lg svg.i, svg.i.lg{width:20px;height:20px}
+.row{display:flex;align-items:center}
+.col{display:flex;flex-direction:column}
+.gap4{gap:4px}.gap6{gap:6px}.gap8{gap:8px}.gap10{gap:10px}.gap12{gap:12px}.gap16{gap:16px}.gap20{gap:20px}.gap24{gap:24px}
+.grow{flex:1;min-width:0}.between{justify-content:space-between}.center{justify-content:center}
+.muted{color:var(--muted-foreground)}.xs{font-size:12px}.sm{font-size:13px}.md{font-size:15px}.lg{font-size:18px}
+.b5{font-weight:500}.b6{font-weight:600}.b7{font-weight:700}
+.num{font-variant-numeric:tabular-nums}
+.ellipsis{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+
+/* ---------- app shell ---------- */
+.app{display:flex;height:100%}
+.sidebar{width:236px;background:var(--sidebar);color:var(--sidebar-fg);display:flex;flex-direction:column;padding:16px 12px;gap:4px;flex:none}
+.logo{display:flex;align-items:center;gap:10px;padding:4px 8px 14px;color:#fff;font-weight:700;font-size:17px;letter-spacing:-.02em}
+.logo-mark{width:30px;height:30px;border-radius:9px;background:var(--brand-300);display:flex;align-items:center;justify-content:center;color:var(--brand-950)}
+.logo-mark svg{width:18px;height:18px;stroke-width:2.4}
+.clinic-card{background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.08);border-radius:10px;padding:10px 10px;display:flex;align-items:center;gap:10px;margin-bottom:10px}
+.clinic-card .av{width:30px;height:30px;border-radius:8px;background:#F4C9C9;color:#6B1F2A;font-weight:700;font-size:12px;display:flex;align-items:center;justify-content:center}
+.clinic-card .t{color:#fff;font-weight:600;font-size:13px}
+.clinic-card .s{color:var(--sidebar-muted);font-size:11.5px}
+.nav-label{font-size:11px;letter-spacing:.06em;text-transform:uppercase;color:var(--sidebar-muted);padding:12px 10px 6px;font-weight:600}
+.nav{display:flex;align-items:center;gap:10px;padding:8px 10px;border-radius:8px;font-size:13.5px;font-weight:500;color:var(--sidebar-fg);position:relative}
+.nav svg.i{color:var(--sidebar-muted)}
+.nav.active{background:var(--sidebar-active);color:#fff}
+.nav.active svg.i{color:var(--brand-300)}
+.nav.active::before{content:"";position:absolute;left:-12px;top:8px;bottom:8px;width:3px;border-radius:0 3px 3px 0;background:var(--brand-300)}
+.nav .kbd{margin-left:auto}
+.nav .count{margin-left:auto;font-size:11px;background:rgba(255,255,255,.08);padding:1px 7px;border-radius:99px;color:var(--sidebar-fg)}
+.setup-card{background:rgba(152,215,138,.10);border:1px solid rgba(152,215,138,.22);border-radius:10px;padding:11px 12px;margin:6px 0 4px}
+.setup-card .t{color:#fff;font-size:12.5px;font-weight:600}
+.progress{height:5px;background:rgba(255,255,255,.12);border-radius:9px;overflow:hidden;margin:8px 0 6px}
+.progress>div{height:100%;background:var(--brand-300);border-radius:9px}
+.sidebar .spacer{flex:1}
+.user{display:flex;align-items:center;gap:10px;padding:10px 8px 2px;border-top:1px solid rgba(255,255,255,.08);margin-top:6px}
+.avatar{width:32px;height:32px;border-radius:99px;background:var(--brand-200);color:var(--brand-950);font-weight:600;font-size:12px;display:flex;align-items:center;justify-content:center;flex:none}
+.avatar.sm{width:26px;height:26px;font-size:10.5px}
+.avatar.lg{width:56px;height:56px;font-size:19px}
+.avatar.pink{background:#F8D7DA;color:#7A2230}.avatar.blue{background:#DCE6FD;color:#1E3A8A}.avatar.amber{background:#FBEBC5;color:#7A4E07}.avatar.violet{background:#EBDDFD;color:#4C1D95}.avatar.teal{background:#CFF1F4;color:#0B5563}
+.lang{display:flex;background:rgba(255,255,255,.07);border-radius:7px;padding:2px;font-size:11px;font-weight:600;margin-left:auto}
+.lang span{padding:3px 7px;border-radius:5px;color:var(--sidebar-muted)}
+.lang span.on{background:rgba(255,255,255,.14);color:#fff}
+
+.main{flex:1;display:flex;flex-direction:column;min-width:0}
+.topbar{height:60px;display:flex;align-items:center;gap:12px;padding:0 28px;border-bottom:1px solid var(--border);background:var(--card);flex:none}
+.topbar h1{font-size:18px;font-weight:650;letter-spacing:-.015em}
+.crumb{font-size:13px;color:var(--muted-foreground);display:flex;align-items:center;gap:6px}
+.search{white-space:nowrap;display:flex;align-items:center;gap:8px;height:36px;padding:0 8px 0 12px;background:var(--muted);border:1px solid transparent;border-radius:9px;color:var(--muted-foreground);font-size:13px;width:300px}
+.kbd{font-size:11px;font-weight:600;color:var(--muted-foreground);background:var(--card);border:1px solid var(--border);border-bottom-width:2px;border-radius:5px;padding:0 5px;line-height:17px;font-family:Inter}
+.sidebar .kbd{background:rgba(255,255,255,.06);border-color:rgba(255,255,255,.1);color:var(--sidebar-muted)}
+.content{flex:1;padding:24px 28px;overflow:hidden;min-height:0}
+
+/* ---------- primitives ---------- */
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:7px;height:36px;padding:0 14px;border-radius:9px;font-size:13.5px;font-weight:600;border:1px solid var(--border);background:var(--card);color:var(--foreground);white-space:nowrap;box-shadow:var(--shadow-sm)}
+.btn.primary{background:var(--primary);border-color:var(--primary);color:#fff}
+.btn.mint{background:var(--brand-100);border-color:var(--brand-200);color:var(--brand-900)}
+.btn.dark{background:var(--brand-950);border-color:var(--brand-950);color:#fff}
+.btn.ghost{background:transparent;border-color:transparent;box-shadow:none}
+.btn.danger{color:var(--destructive)}
+.btn.sm{height:30px;padding:0 10px;font-size:12.5px;border-radius:7px}
+.btn.lg{height:46px;padding:0 20px;font-size:15px;border-radius:11px}
+.btn.xl{height:56px;padding:0 22px;font-size:16px;border-radius:12px}
+.btn.icon{width:36px;padding:0}.btn.sm.icon{width:30px}
+.card{background:var(--card);border:1px solid var(--border);border-radius:var(--radius-lg);box-shadow:var(--shadow-sm)}
+.card-h{display:flex;align-items:center;gap:10px;padding:16px 18px 12px}
+.card-h h3{font-size:14.5px;font-weight:650;letter-spacing:-.01em}
+.card-b{padding:0 18px 16px}
+.divider{height:1px;background:var(--border)}
+.badge{display:inline-flex;align-items:center;gap:5px;height:22px;padding:0 9px 0 7px;border-radius:99px;font-size:12px;font-weight:550;white-space:nowrap}
+.badge svg.i{width:13px;height:13px;stroke-width:2}
+.badge.booked{background:var(--s-booked-bg);color:var(--s-booked)}
+.badge.arrived{background:var(--s-arrived-bg);color:var(--s-arrived)}
+.badge.progress{background:var(--s-progress-bg);color:var(--s-progress)}
+.badge.done,.badge.paid{background:var(--s-done-bg);color:var(--s-done)}
+.badge.noshow,.badge.partial{background:var(--s-noshow-bg);color:var(--s-noshow)}
+.badge.cancel,.badge.unpaid{background:var(--s-cancel-bg);color:var(--s-cancel)}
+.badge.neutral{background:var(--s-neutral-bg);color:var(--s-neutral)}
+.dot{width:8px;height:8px;border-radius:99px;flex:none;display:inline-block}
+.chip{display:inline-flex;align-items:center;gap:6px;height:30px;padding:0 11px;border:1px solid var(--border);border-radius:8px;background:var(--card);font-size:12.5px;font-weight:500;color:var(--foreground)}
+.chip.on{background:var(--brand-950);border-color:var(--brand-950);color:#fff}
+.seg{display:inline-flex;background:var(--muted);border-radius:9px;padding:3px;gap:2px}
+.seg span{white-space:nowrap;padding:5px 12px;border-radius:7px;font-size:12.5px;font-weight:550;color:var(--muted-foreground)}
+.seg span.on{background:var(--card);color:var(--foreground);box-shadow:var(--shadow-sm)}
+.field{display:flex;flex-direction:column;gap:6px}
+.label{font-size:12.5px;font-weight:600;color:var(--foreground)}
+.label .req{color:var(--destructive)}
+.input{height:40px;border:1px solid var(--input);border-radius:9px;background:var(--card);display:flex;align-items:center;gap:8px;padding:0 12px;font-size:13.5px;color:var(--foreground)}
+.input.ph{color:#98A39E}
+.input.focus{border-color:var(--ring);box-shadow:0 0 0 3px rgba(63,166,107,.18)}
+.input.area{height:auto;min-height:84px;align-items:flex-start;padding:10px 12px;line-height:1.5}
+.hint{font-size:12px;color:var(--muted-foreground)}
+.tabs{display:flex;gap:22px;border-bottom:1px solid var(--border)}
+.tabs span{padding:10px 0 11px;font-size:13.5px;font-weight:550;color:var(--muted-foreground);position:relative;display:flex;align-items:center;gap:6px}
+.tabs span.on{color:var(--foreground)}
+.tabs span.on::after{content:"";position:absolute;left:0;right:0;bottom:-1px;height:2px;background:var(--brand-700);border-radius:2px}
+.tabs .n{font-size:11px;background:var(--muted);border-radius:99px;padding:0 6px;color:var(--muted-foreground)}
+
+/* DataTable */
+.table{width:100%;border-collapse:separate;border-spacing:0;font-size:13.5px}
+.table th{font-size:11.5px;font-weight:600;letter-spacing:.04em;text-transform:uppercase;color:var(--muted-foreground);text-align:left;padding:10px 12px;border-bottom:1px solid var(--border);background:#FAFBFA;white-space:nowrap}
+.table td{padding:0 12px;height:52px;border-bottom:1px solid var(--border);white-space:nowrap}
+.table tr.sel td{background:var(--brand-50)}
+.table td.r,.table th.r{text-align:right}
+.cb{width:16px;height:16px;border:1.5px solid #C4CEC7;border-radius:4.5px;background:#fff;display:inline-block;vertical-align:middle}
+.cb.on{background:var(--brand-700);border-color:var(--brand-700);position:relative}
+.money{font-variant-numeric:tabular-nums;font-weight:550}
+.neg{color:var(--s-cancel)}.pos{color:var(--s-done)}
+
+/* stat */
+.stat{padding:16px 18px}
+.stat .k{font-size:12.5px;color:var(--muted-foreground);font-weight:550;display:flex;align-items:center;gap:6px}
+.stat .v{font-size:26px;font-weight:700;letter-spacing:-.025em;margin-top:6px;font-variant-numeric:tabular-nums}
+.stat .d{font-size:12px;margin-top:4px;color:var(--muted-foreground)}
+.trend-up{color:var(--s-done);font-weight:600}
+
+/* drawer / overlays */
+.scrim{position:absolute;inset:0;background:rgba(14,35,31,.38)}
+.drawer{position:absolute;top:0;right:0;bottom:0;background:var(--card);box-shadow:var(--shadow-lg);display:flex;flex-direction:column;border-left:1px solid var(--border)}
+.drawer-h{display:flex;align-items:center;gap:10px;padding:16px 20px;border-bottom:1px solid var(--border)}
+.drawer-f{margin-top:auto;border-top:1px solid var(--border);padding:14px 20px;display:flex;gap:10px;align-items:center;background:#FBFCFB}
+.modal{position:absolute;background:var(--card);border-radius:16px;box-shadow:var(--shadow-lg);border:1px solid var(--border)}
+
+/* calendar */
+.cal{display:grid;position:relative}
+.cal-hours .h{height:64px;font-size:11.5px;color:var(--muted-foreground);text-align:right;padding-right:10px;transform:translateY(-7px)}
+.slot-line{position:absolute;left:0;right:0;border-top:1px solid var(--border)}
+.slot-line.half{border-top:1px dashed #EDF1ED}
+.appt{position:absolute;justify-content:center;left:6px;right:6px;border-radius:9px;padding:7px 10px;font-size:12.5px;overflow:hidden;border:1px solid transparent;display:flex;flex-direction:column;gap:2px}
+.appt .t{font-weight:650;color:var(--foreground);font-size:12.5px}
+.appt .m{font-size:11.5px;color:var(--muted-foreground)}
+.appt::before{content:"";position:absolute;left:0;top:0;bottom:0;width:4px}
+.appt.sel{box-shadow:0 0 0 2px var(--brand-700),var(--shadow);}
+.now-line{position:absolute;left:0;right:0;height:2px;background:#E0485F}
+.now-line::before{content:"";position:absolute;left:-5px;top:-4px;width:10px;height:10px;border-radius:99px;background:#E0485F}
+
+/* misc */
+.kv{display:grid;grid-template-columns:130px 1fr;row-gap:10px;font-size:13.5px}
+.kv .k{color:var(--muted-foreground)}
+.pill-tab{display:inline-flex;align-items:center;gap:6px}
+.hr-dash{border-top:1px dashed var(--border)}
+.timeline{position:relative}
+.tl-item{display:flex;gap:12px;position:relative;padding-bottom:16px}
+.tl-dot{width:26px;height:26px;border-radius:99px;display:flex;align-items:center;justify-content:center;flex:none;z-index:1}
+.tl-dot svg.i{width:13px;height:13px;stroke-width:2.2}
+.tl-line{position:absolute;left:12.5px;top:26px;bottom:0;width:1px;background:var(--border)}
+.icon-tile{width:36px;height:36px;border-radius:10px;display:flex;align-items:center;justify-content:center;flex:none}
+.note{font-size:11px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:var(--muted-foreground)}
+</style></head><body style="margin:0;background:#fff"><div class="frame" data-name="09 Patient — Billing ledger" style="width:1440px;height:900px"><div class="app"><aside class="sidebar">
+  <div class="logo"><div class="logo-mark"><svg class="i "xmlns="http://www.w3.org/2000/svg"viewBox="0 0 24 24"fill="none"stroke="currentColor"stroke-width="2"stroke-linecap="round"stroke-linejoin="round"><path d="M22 12h-2.48a2 2 0 0 0-1.93 1.46l-2.35 8.36a.25.25 0 0 1-.48 0L9.24 2.18a.25.25 0 0 0-.48 0l-2.35 8.36A2 2 0 0 1 4.49 12H2" /></svg></div>ClinicFlow</div>
+  <div class="clinic-card"><div class="av">KH</div><div class="grow"><div class="t ellipsis">Klinika Dentare Hoxha</div><div class="s">Tiranë · Owner</div></div><svg class="i sm"xmlns="http://www.w3.org/2000/svg"viewBox="0 0 24 24"fill="none"stroke="currentColor"stroke-width="2"stroke-linecap="round"stroke-linejoin="round"><path d="m7 15 5 5 5-5" /><path d="m7 9 5-5 5 5" /></svg></div>
+  <div class="nav"><svg class="i "xmlns="http://www.w3.org/2000/svg"viewBox="0 0 24 24"fill="none"stroke="currentColor"stroke-width="2"stroke-linecap="round"stroke-linejoin="round"><path d="m21 21-4.34-4.34" /><circle cx="11" cy="11" r="8" /></svg><span>Search</span><span class="kbd" style="margin-left:auto">⌘K</span></div>
+  <div class="nav "><svg class="i "xmlns="http://www.w3.org/2000/svg"viewBox="0 0 24 24"fill="none"stroke="currentColor"stroke-width="2"stroke-linecap="round"stroke-linejoin="round"><rect width="7" height="9" x="3" y="3" rx="1" /><rect width="7" height="5" x="14" y="3" rx="1" /><rect width="7" height="9" x="14" y="12" rx="1" /><rect width="7" height="5" x="3" y="16" rx="1" /></svg><span>Dashboard</span></div>
+  <div class="nav "><svg class="i "xmlns="http://www.w3.org/2000/svg"viewBox="0 0 24 24"fill="none"stroke="currentColor"stroke-width="2"stroke-linecap="round"stroke-linejoin="round"><path d="M8 2v3" /><path d="M16 2v3" /><rect x="3" y="3" width="18" height="18" rx="2" /><path d="M3 9h18" /><path d="M8 13h.01" /><path d="M12 13h.01" /><path d="M16 13h.01" /><path d="M8 17h.01" /><path d="M12 17h.01" /><path d="M16 17h.01" /></svg><span>Calendar</span><span class="count">9</span></div>
+  <div class="nav active"><svg class="i "xmlns="http://www.w3.org/2000/svg"viewBox="0 0 24 24"fill="none"stroke="currentColor"stroke-width="2"stroke-linecap="round"stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2" /><path d="M16 3.128a4 4 0 0 1 0 7.744" /><path d="M22 21v-2a4 4 0 0 0-3-3.87" /><circle cx="9" cy="7" r="4" /></svg><span>Patients</span></div>
+  <div class="nav "><svg class="i "xmlns="http://www.w3.org/2000/svg"viewBox="0 0 24 24"fill="none"stroke="currentColor"stroke-width="2"stroke-linecap="round"stroke-linejoin="round"><path d="M19 7V4a1 1 0 0 0-1-1H5a2 2 0 0 0 0 4h15a1 1 0 0 1 1 1v4h-3a2 2 0 0 0 0 4h3a1 1 0 0 0 1-1v-2a1 1 0 0 0-1-1" /><path d="M3 5v14a2 2 0 0 0 2 2h15a1 1 0 0 0 1-1v-4" /></svg><span>Finances</span><span class="count" style="background:rgba(224,96,126,.18);color:#F5B3C2">4</span></div>
+  <div class="nav-label">Clinic</div>
+  <div class="nav "><svg class="i "xmlns="http://www.w3.org/2000/svg"viewBox="0 0 24 24"fill="none"stroke="currentColor"stroke-width="2"stroke-linecap="round"stroke-linejoin="round"><path d="M11 2v2" /><path d="M5 2v2" /><path d="M5 3H4a2 2 0 0 0-2 2v4a6 6 0 0 0 12 0V5a2 2 0 0 0-2-2h-1" /><path d="M8 15a6 6 0 0 0 12 0v-3" /><circle cx="20" cy="10" r="2" /></svg><span>Services</span></div><div class="nav "><svg class="i "xmlns="http://www.w3.org/2000/svg"viewBox="0 0 24 24"fill="none"stroke="currentColor"stroke-width="2"stroke-linecap="round"stroke-linejoin="round"><path d="M9.671 4.136a2.34 2.34 0 0 1 4.659 0 2.34 2.34 0 0 0 3.319 1.915 2.34 2.34 0 0 1 2.33 4.033 2.34 2.34 0 0 0 0 3.831 2.34 2.34 0 0 1-2.33 4.033 2.34 2.34 0 0 0-3.319 1.915 2.34 2.34 0 0 1-4.659 0 2.34 2.34 0 0 0-3.32-1.915 2.34 2.34 0 0 1-2.33-4.033 2.34 2.34 0 0 0 0-3.831A2.34 2.34 0 0 1 6.35 6.051a2.34 2.34 0 0 0 3.319-1.915" /><circle cx="12" cy="12" r="3" /></svg><span>Settings</span></div>
+  <div class="spacer"></div>
+  <div class="setup-card"><div class="row between"><span class="t">Finish setting up</span><svg class="i sm"xmlns="http://www.w3.org/2000/svg"viewBox="0 0 24 24"fill="none"stroke="currentColor"stroke-width="2"stroke-linecap="round"stroke-linejoin="round"><path d="m9 18 6-6-6-6" /></svg></div><div class="progress"><div style="width:80%"></div></div><div class="xs" style="color:var(--sidebar-muted)">4 / 5 completed</div></div>
+  <div class="user"><div class="avatar sm">EH</div><div class="grow" style="min-width:0"><div class="ellipsis" style="color:#fff;font-size:13px;font-weight:600">Dr. Elira Hoxha</div><div class="xs ellipsis" style="color:var(--sidebar-muted)">elira@hoxha.al</div></div><div class="lang"><span class="on">EN</span><span class="">SQ</span></div></div>
+</aside><div class="main">
+
+<div style="background:var(--card);border-bottom:1px solid var(--border);padding:18px 28px 0">
+  <div class="crumb" style="margin-bottom:14px"><svg class="i sm"xmlns="http://www.w3.org/2000/svg"viewBox="0 0 24 24"fill="none"stroke="currentColor"stroke-width="2"stroke-linecap="round"stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2" /><path d="M16 3.128a4 4 0 0 1 0 7.744" /><path d="M22 21v-2a4 4 0 0 0-3-3.87" /><circle cx="9" cy="7" r="4" /></svg>Patients <svg class="i sm"xmlns="http://www.w3.org/2000/svg"viewBox="0 0 24 24"fill="none"stroke="currentColor"stroke-width="2"stroke-linecap="round"stroke-linejoin="round"><path d="m9 18 6-6-6-6" /></svg><span style="color:var(--foreground);font-weight:550">Arben Çela</span></div>
+  <div class="row gap16">
+    <div class="avatar lg blue">AÇ</div>
+    <div class="grow">
+      <div class="row gap10"><span style="font-size:22px;font-weight:700;letter-spacing:-.02em">Arben Çela</span><span class="badge neutral">#P-0187</span></div>
+      <div class="row gap16 sm muted" style="margin-top:4px"><span class="row gap6"><svg class="i sm"xmlns="http://www.w3.org/2000/svg"viewBox="0 0 24 24"fill="none"stroke="currentColor"stroke-width="2"stroke-linecap="round"stroke-linejoin="round"><path d="M13.832 16.568a1 1 0 0 0 1.213-.303l.355-.465A2 2 0 0 1 17 15h3a2 2 0 0 1 2 2v3a2 2 0 0 1-2 2A18 18 0 0 1 2 4a2 2 0 0 1 2-2h3a2 2 0 0 1 2 2v3a2 2 0 0 1-.8 1.6l-.468.351a1 1 0 0 0-.292 1.233 14 14 0 0 0 6.392 6.384" /></svg>+355 68 220 1145</span><span class="row gap6"><svg class="i sm"xmlns="http://www.w3.org/2000/svg"viewBox="0 0 24 24"fill="none"stroke="currentColor"stroke-width="2"stroke-linecap="round"stroke-linejoin="round"><path d="M20 21v-8a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v8" /><path d="M4 16s.5-1 2-1 2.5 2 4 2 2.5-2 4-2 2.5 2 4 2 2-1 2-1" /><path d="M2 21h20" /><path d="M7 8v3" /><path d="M12 8v3" /><path d="M17 8v3" /><path d="M7 4h.01" /><path d="M12 4h.01" /><path d="M17 4h.01" /></svg>12 Mar 1975 · 51 y</span><span class="row gap6"><svg class="i sm"xmlns="http://www.w3.org/2000/svg"viewBox="0 0 24 24"fill="none"stroke="currentColor"stroke-width="2"stroke-linecap="round"stroke-linejoin="round"><path d="M13 19a4 4 0 00-8 0" /><path d="M16 10h2" /><path d="M16 14h2" /><circle cx="9" cy="12" r="3" /><rect x="2" y="5" width="20" height="14" rx="2" /></svg>NID J50312045K</span><span class="row gap6"><svg class="i sm"xmlns="http://www.w3.org/2000/svg"viewBox="0 0 24 24"fill="none"stroke="currentColor"stroke-width="2"stroke-linecap="round"stroke-linejoin="round"><path d="M20 10c0 4.993-5.539 10.193-7.399 11.799a1 1 0 0 1-1.202 0C9.539 20.193 4 14.993 4 10a8 8 0 0 1 16 0" /><circle cx="12" cy="10" r="3" /></svg>Tiranë</span></div>
+    </div>
+    <div style="background:var(--s-noshow-bg);border:1px solid #F3DDB0;border-radius:12px;padding:10px 16px;min-width:210px">
+      <div class="xs b6" style="color:var(--s-noshow)">Balance owed</div>
+      <div class="row gap10"><span class="num b7" style="font-size:24px;letter-spacing:-.02em;color:#6E4708">ALL 12,200</span></div>
+      <div class="xs" style="color:#8A6212">of ALL 18,000 · 1 open charge</div>
+    </div>
+    <div class="col gap8"><div class="btn primary"><svg class="i "xmlns="http://www.w3.org/2000/svg"viewBox="0 0 24 24"fill="none"stroke="currentColor"stroke-width="2"stroke-linecap="round"stroke-linejoin="round"><path d="M11 15h2a2 2 0 1 0 0-4h-3c-.6 0-1.1.2-1.4.6L3 17" /><path d="m7 21 1.6-1.4c.3-.4.8-.6 1.4-.6h4c1.1 0 2.1-.4 2.8-1.2l4.6-4.4a2 2 0 0 0-2.75-2.91l-4.2 3.9" /><path d="m2 16 6 6" /><circle cx="16" cy="9" r="2.9" /><circle cx="6" cy="5" r="3" /></svg>Record payment</div><div class="btn"><svg class="i "xmlns="http://www.w3.org/2000/svg"viewBox="0 0 24 24"fill="none"stroke="currentColor"stroke-width="2"stroke-linecap="round"stroke-linejoin="round"><path d="M16 18h6" /><path d="M16 2v3" /><path d="M19 15v6" /><path d="M21 11.5V5a2 2 0 00-2-2H5a2 2 0 00-2 2v14a2 2 0 002 2h8.3" /><path d="M3 9h18" /><path d="M8 2v3" /></svg>Book</div></div>
+  </div>
+  <div class="tabs" style="margin-top:18px;border-bottom:none">
+    <span class="">Overview</span><span class="">Appointments<span class="n">4</span></span><span class="on">Billing<span class="n">1 open</span></span><span class="">Files<span class="n">3</span></span>
+  </div>
+</div>
+<div class="content" style="display:grid;grid-template-columns:minmax(0,1fr) 360px;gap:16px;align-content:start">
+  <div class="col gap16">
+    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:12px">
+      <div class="card stat" style="padding:14px 16px"><div class="k">Total charged</div><div class="v" style="font-size:22px">ALL 27,500</div></div>
+      <div class="card stat" style="padding:14px 16px"><div class="k">Total paid</div><div class="v" style="font-size:22px;color:var(--s-done)">ALL 15,300</div></div>
+      <div class="card stat" style="padding:14px 16px"><div class="k">Balance</div><div class="v" style="font-size:22px;color:var(--s-noshow)">ALL 12,200</div></div>
+    </div>
+    <div class="card" style="overflow:hidden">
+      <div class="card-h"><h3>Ledger</h3><div class="grow"></div><div class="seg"><span class="on">All</span><span>Charges</span><span>Payments</span></div></div>
+      <table class="table"><thead><tr><th>Date</th><th>Type</th><th>Description</th><th class="r">Charge</th><th class="r">Payment</th><th class="r">Running balance</th><th></th></tr></thead><tbody>
+      <tr style="background:repeating-linear-gradient(135deg,#FBFCFB 0 8px,#F6F8F5 8px 16px)">
+        <td class="num muted">05 Oct</td>
+        <td><span class="badge neutral"><svg class="i "xmlns="http://www.w3.org/2000/svg"viewBox="0 0 24 24"fill="none"stroke="currentColor"stroke-width="2"stroke-linecap="round"stroke-linejoin="round"><circle cx="12" cy="12" r="10" /><path d="M12 6v6l4 2" /></svg>Upcoming</span></td>
+        <td class="b5">Zbardhim · session 2</td>
+        <td class="r money"><span class="muted xs">Scheduled</span></td>
+        <td class="r money pos"></td>
+        <td class="r money muted"></td>
+        <td class="muted"><svg class="i sm"xmlns="http://www.w3.org/2000/svg"viewBox="0 0 24 24"fill="none"stroke="currentColor"stroke-width="2"stroke-linecap="round"stroke-linejoin="round"><circle cx="12" cy="12" r="1" /><circle cx="19" cy="12" r="1" /><circle cx="5" cy="12" r="1" /></svg></td></tr><tr style="">
+        <td class="num muted">21 Sep</td>
+        <td><span class="badge paid"><svg class="i "xmlns="http://www.w3.org/2000/svg"viewBox="0 0 24 24"fill="none"stroke="currentColor"stroke-width="2"stroke-linecap="round"stroke-linejoin="round"><path d="M17 7 7 17" /><path d="M17 17H7V7" /></svg>Payment</span></td>
+        <td class="b5">Cash · RC-2026-0038</td>
+        <td class="r money"><span class="muted xs"></span></td>
+        <td class="r money pos">− ALL 5,800</td>
+        <td class="r money ">ALL 12,200</td>
+        <td class="muted"><svg class="i sm"xmlns="http://www.w3.org/2000/svg"viewBox="0 0 24 24"fill="none"stroke="currentColor"stroke-width="2"stroke-linecap="round"stroke-linejoin="round"><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2" /><path d="M6 9V3a1 1 0 0 1 1-1h10a1 1 0 0 1 1 1v6" /><rect x="6" y="14" width="12" height="8" rx="1" /></svg></td></tr><tr style="">
+        <td class="num muted">21 Sep</td>
+        <td><span class="badge booked"><svg class="i "xmlns="http://www.w3.org/2000/svg"viewBox="0 0 24 24"fill="none"stroke="currentColor"stroke-width="2"stroke-linecap="round"stroke-linejoin="round"><path d="M7 7h10v10" /><path d="M7 17 17 7" /></svg>Charge</span></td>
+        <td class="b5">Zbardhim (whitening) · full course</td>
+        <td class="r money">ALL 18,000</td>
+        <td class="r money pos"></td>
+        <td class="r money ">ALL 18,000</td>
+        <td class="muted"><svg class="i sm"xmlns="http://www.w3.org/2000/svg"viewBox="0 0 24 24"fill="none"stroke="currentColor"stroke-width="2"stroke-linecap="round"stroke-linejoin="round"><circle cx="12" cy="12" r="1" /><circle cx="19" cy="12" r="1" /><circle cx="5" cy="12" r="1" /></svg></td></tr><tr style="">
+        <td class="num muted">03 Jul</td>
+        <td><span class="badge paid"><svg class="i "xmlns="http://www.w3.org/2000/svg"viewBox="0 0 24 24"fill="none"stroke="currentColor"stroke-width="2"stroke-linecap="round"stroke-linejoin="round"><path d="M17 7 7 17" /><path d="M17 17H7V7" /></svg>Payment</span></td>
+        <td class="b5">Card · RC-2026-0021</td>
+        <td class="r money"><span class="muted xs"></span></td>
+        <td class="r money pos">− ALL 3,500</td>
+        <td class="r money ">ALL 0</td>
+        <td class="muted"><svg class="i sm"xmlns="http://www.w3.org/2000/svg"viewBox="0 0 24 24"fill="none"stroke="currentColor"stroke-width="2"stroke-linecap="round"stroke-linejoin="round"><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2" /><path d="M6 9V3a1 1 0 0 1 1-1h10a1 1 0 0 1 1 1v6" /><rect x="6" y="14" width="12" height="8" rx="1" /></svg></td></tr><tr style="">
+        <td class="num muted">03 Jul</td>
+        <td><span class="badge booked"><svg class="i "xmlns="http://www.w3.org/2000/svg"viewBox="0 0 24 24"fill="none"stroke="currentColor"stroke-width="2"stroke-linecap="round"stroke-linejoin="round"><path d="M7 7h10v10" /><path d="M7 17 17 7" /></svg>Charge</span></td>
+        <td class="b5">Pastrim</td>
+        <td class="r money">ALL 3,500</td>
+        <td class="r money pos"></td>
+        <td class="r money ">ALL 3,500</td>
+        <td class="muted"><svg class="i sm"xmlns="http://www.w3.org/2000/svg"viewBox="0 0 24 24"fill="none"stroke="currentColor"stroke-width="2"stroke-linecap="round"stroke-linejoin="round"><circle cx="12" cy="12" r="1" /><circle cx="19" cy="12" r="1" /><circle cx="5" cy="12" r="1" /></svg></td></tr><tr style="">
+        <td class="num muted">12 Mar</td>
+        <td><span class="badge paid"><svg class="i "xmlns="http://www.w3.org/2000/svg"viewBox="0 0 24 24"fill="none"stroke="currentColor"stroke-width="2"stroke-linecap="round"stroke-linejoin="round"><path d="M17 7 7 17" /><path d="M17 17H7V7" /></svg>Payment</span></td>
+        <td class="b5">Cash · RC-2026-0009</td>
+        <td class="r money"><span class="muted xs"></span></td>
+        <td class="r money pos">− ALL 6,000</td>
+        <td class="r money ">ALL 0</td>
+        <td class="muted"><svg class="i sm"xmlns="http://www.w3.org/2000/svg"viewBox="0 0 24 24"fill="none"stroke="currentColor"stroke-width="2"stroke-linecap="round"stroke-linejoin="round"><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2" /><path d="M6 9V3a1 1 0 0 1 1-1h10a1 1 0 0 1 1 1v6" /><rect x="6" y="14" width="12" height="8" rx="1" /></svg></td></tr><tr style="">
+        <td class="num muted">12 Mar</td>
+        <td><span class="badge booked"><svg class="i "xmlns="http://www.w3.org/2000/svg"viewBox="0 0 24 24"fill="none"stroke="currentColor"stroke-width="2"stroke-linecap="round"stroke-linejoin="round"><path d="M7 7h10v10" /><path d="M7 17 17 7" /></svg>Charge</span></td>
+        <td class="b5">Mbushje kompozit · 26</td>
+        <td class="r money">ALL 6,000</td>
+        <td class="r money pos"></td>
+        <td class="r money ">ALL 6,000</td>
+        <td class="muted"><svg class="i sm"xmlns="http://www.w3.org/2000/svg"viewBox="0 0 24 24"fill="none"stroke="currentColor"stroke-width="2"stroke-linecap="round"stroke-linejoin="round"><circle cx="12" cy="12" r="1" /><circle cx="19" cy="12" r="1" /><circle cx="5" cy="12" r="1" /></svg></td></tr>
+      </tbody></table>
+    </div>
+  </div>
+  <div class="col gap16">
+    <div class="card"><div class="card-h"><h3>Open charge</h3><div class="grow"></div><span class="badge partial"><svg class="i "xmlns="http://www.w3.org/2000/svg"viewBox="0 0 24 24"fill="none"stroke="currentColor"stroke-width="2"stroke-linecap="round"stroke-linejoin="round"><path d="M10.1 2.182a10 10 0 0 1 3.8 0" /><path d="M13.9 21.818a10 10 0 0 1-3.8 0" /><path d="M17.609 3.721a10 10 0 0 1 2.69 2.7" /><path d="M2.182 13.9a10 10 0 0 1 0-3.8" /><path d="M20.279 17.609a10 10 0 0 1-2.7 2.69" /><path d="M21.818 10.1a10 10 0 0 1 0 3.8" /><path d="M3.721 6.391a10 10 0 0 1 2.7-2.69" /><path d="M6.391 20.279a10 10 0 0 1-2.69-2.7" /></svg>Partially paid</span></div>
+      <div class="card-b">
+        <div class="b6">Zbardhim · full course</div><div class="xs muted">Charged 21 Sep · price snapshot ALL 18,000</div>
+        <div class="row" style="align-items:stretch;height:10px;border-radius:99px;overflow:hidden;background:var(--muted);margin:14px 0 8px"><div style="width:32%;background:var(--brand-500)"></div></div>
+        <div class="row between sm"><span class="muted">Paid ALL 5,800</span><span class="b6">ALL 12,200 left</span></div>
+        <div class="divider" style="margin:14px 0"></div>
+        <div class="row between"><span class="sm b6">Pay as</span><div class="seg"><span>Full</span><span class="on">Instalments</span></div></div>
+        <div class="col gap8" style="margin-top:12px">
+          
+          <div class="row gap10" style="padding:10px 12px;border:1px solid var(--border);border-radius:10px;">
+            <span style="width:22px;height:22px;border-radius:99px;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;background:var(--brand-500);color:#fff"><svg class="i sm"xmlns="http://www.w3.org/2000/svg"viewBox="0 0 24 24"fill="none"stroke="currentColor"stroke-width="2"stroke-linecap="round"stroke-linejoin="round"><path d="M20 6 9 17l-5-5" /></svg></span>
+            <span class="sm grow">21 Sep</span><span class="money sm">ALL 5,800</span></div>
+          <div class="row gap10" style="padding:10px 12px;border:1px solid var(--brand-200);border-radius:10px;background:var(--brand-50)">
+            <span style="width:22px;height:22px;border-radius:99px;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;background:var(--muted)">2</span>
+            <span class="sm grow">05 Oct · <span class="b6">next, with session 2</span></span><span class="money sm">ALL 6,100</span></div>
+          <div class="row gap10" style="padding:10px 12px;border:1px solid var(--border);border-radius:10px;">
+            <span style="width:22px;height:22px;border-radius:99px;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;background:var(--muted)">3</span>
+            <span class="sm grow">05 Nov</span><span class="money sm">ALL 6,100</span></div>
+        </div>
+        <div class="hint" style="margin-top:10px">Switch back to “Full” anytime — payments already made stay allocated (oldest first).</div>
+      </div></div>
+    <div class="card"><div class="card-h"><h3>Documents</h3><div class="grow"></div><span class="btn sm"><svg class="i sm"xmlns="http://www.w3.org/2000/svg"viewBox="0 0 24 24"fill="none"stroke="currentColor"stroke-width="2"stroke-linecap="round"stroke-linejoin="round"><path d="M6 22a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h8a2.4 2.4 0 0 1 1.704.706l3.588 3.588A2.4 2.4 0 0 1 20 8v12a2 2 0 0 1-2 2z" /><path d="M14 2v5a1 1 0 0 0 1 1h5" /><path d="M9 15h6" /><path d="M12 18v-6" /></svg>Statement</span></div>
+      <div class="col" style="padding:0 18px 12px">
+      <div class="row gap10" style="padding:8px 0;border-bottom:1px solid var(--border)"><div class="icon-tile" style="width:30px;height:30px;background:var(--muted)"><svg class="i sm"xmlns="http://www.w3.org/2000/svg"viewBox="0 0 24 24"fill="none"stroke="currentColor"stroke-width="2"stroke-linecap="round"stroke-linejoin="round"><path d="M6 22a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h8a2.4 2.4 0 0 1 1.704.706l3.588 3.588A2.4 2.4 0 0 1 20 8v12a2 2 0 0 1-2 2z" /><path d="M14 2v5a1 1 0 0 0 1 1h5" /><path d="M10 9H8" /><path d="M16 13H8" /><path d="M16 17H8" /></svg></div><div class="grow"><div class="sm b6">RC-2026-0038</div><div class="xs muted">21 Sep · ALL 5,800</div></div><svg class="i sm"xmlns="http://www.w3.org/2000/svg"viewBox="0 0 24 24"fill="none"stroke="currentColor"stroke-width="2"stroke-linecap="round"stroke-linejoin="round"><path d="M12 15V3" /><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" /><path d="m7 10 5 5 5-5" /></svg></div><div class="row gap10" style="padding:8px 0;border-bottom:1px solid var(--border)"><div class="icon-tile" style="width:30px;height:30px;background:var(--muted)"><svg class="i sm"xmlns="http://www.w3.org/2000/svg"viewBox="0 0 24 24"fill="none"stroke="currentColor"stroke-width="2"stroke-linecap="round"stroke-linejoin="round"><path d="M6 22a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h8a2.4 2.4 0 0 1 1.704.706l3.588 3.588A2.4 2.4 0 0 1 20 8v12a2 2 0 0 1-2 2z" /><path d="M14 2v5a1 1 0 0 0 1 1h5" /><path d="M10 9H8" /><path d="M16 13H8" /><path d="M16 17H8" /></svg></div><div class="grow"><div class="sm b6">RC-2026-0021</div><div class="xs muted">03 Jul · ALL 3,500</div></div><svg class="i sm"xmlns="http://www.w3.org/2000/svg"viewBox="0 0 24 24"fill="none"stroke="currentColor"stroke-width="2"stroke-linecap="round"stroke-linejoin="round"><path d="M12 15V3" /><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" /><path d="m7 10 5 5 5-5" /></svg></div><div class="row gap10" style="padding:8px 0;border-bottom:1px solid var(--border)"><div class="icon-tile" style="width:30px;height:30px;background:var(--muted)"><svg class="i sm"xmlns="http://www.w3.org/2000/svg"viewBox="0 0 24 24"fill="none"stroke="currentColor"stroke-width="2"stroke-linecap="round"stroke-linejoin="round"><path d="M6 22a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h8a2.4 2.4 0 0 1 1.704.706l3.588 3.588A2.4 2.4 0 0 1 20 8v12a2 2 0 0 1-2 2z" /><path d="M14 2v5a1 1 0 0 0 1 1h5" /><path d="M10 9H8" /><path d="M16 13H8" /><path d="M16 17H8" /></svg></div><div class="grow"><div class="sm b6">RC-2026-0009</div><div class="xs muted">12 Mar · ALL 6,000</div></div><svg class="i sm"xmlns="http://www.w3.org/2000/svg"viewBox="0 0 24 24"fill="none"stroke="currentColor"stroke-width="2"stroke-linecap="round"stroke-linejoin="round"><path d="M12 15V3" /><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" /><path d="m7 10 5 5 5-5" /></svg></div>
+      </div></div>
+  </div>
+  <div style="display:grid;grid-template-columns:1fr 400px;gap:16px">
+    <div class="card"><div class="card-h"><h3>Collected · last 7 days</h3><div class="grow"></div><span class="xs muted">ALL 76,800 this week</span></div>
+      <div class="card-b row gap16" style="align-items:flex-end;height:150px;padding-top:8px">
+      <div class="col gap6 grow" style="align-items:center"><span class="xs num muted">11.2k</span><div style="width:100%;max-width:64px;height:53.05263157894736px;border-radius:6px 6px 3px 3px;background:var(--brand-200)"></div><span class="xs muted">Tue</span></div><div class="col gap6 grow" style="align-items:center"><span class="xs num muted">14.8k</span><div style="width:100%;max-width:64px;height:70.10526315789474px;border-radius:6px 6px 3px 3px;background:var(--brand-200)"></div><span class="xs muted">Wed</span></div><div class="col gap6 grow" style="align-items:center"><span class="xs num muted">9.6k</span><div style="width:100%;max-width:64px;height:45.473684210526315px;border-radius:6px 6px 3px 3px;background:var(--brand-200)"></div><span class="xs muted">Thu</span></div><div class="col gap6 grow" style="align-items:center"><span class="xs num muted">18.9k</span><div style="width:100%;max-width:64px;height:89.52631578947368px;border-radius:6px 6px 3px 3px;background:var(--brand-200)"></div><span class="xs muted">Fri</span></div><div class="col gap6 grow" style="align-items:center"><span class="xs num muted">6.3k</span><div style="width:100%;max-width:64px;height:29.842105263157894px;border-radius:6px 6px 3px 3px;background:var(--brand-200)"></div><span class="xs muted">Sat</span></div><div class="col gap6 grow" style="align-items:center"><span class="xs num muted">—</span><div style="width:100%;max-width:64px;height:3px;border-radius:6px 6px 3px 3px;background:var(--brand-200)"></div><span class="xs muted">Sun</span></div><div class="col gap6 grow" style="align-items:center"><span class="xs num muted">16.0k</span><div style="width:100%;max-width:64px;height:75.78947368421052px;border-radius:6px 6px 3px 3px;background:var(--brand-500)"></div><span class="xs b6">Mon</span></div>
+      </div></div>
+    <div class="card"><div class="card-h"><h3>Receipts</h3><div class="grow"></div><span class="xs muted">Next: RC-2026-0043</span></div>
+      <div class="card-b col gap8 sm">
+        <div class="row between"><span class="muted">Issued today</span><span class="b6">4</span></div>
+        <div class="row between"><span class="muted">Issued this year</span><span class="b6">42</span></div>
+        <div class="row between"><span class="muted">Numbering</span><span class="b6">RC-YYYY-#### · non-fiscal</span></div>
+        <div class="btn sm" style="margin-top:6px"><svg class="i sm"xmlns="http://www.w3.org/2000/svg"viewBox="0 0 24 24"fill="none"stroke="currentColor"stroke-width="2"stroke-linecap="round"stroke-linejoin="round"><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2" /><path d="M6 9V3a1 1 0 0 1 1-1h10a1 1 0 0 1 1 1v6" /><rect x="6" y="14" width="12" height="8" rx="1" /></svg>Print day summary</div>
+      </div></div>
+  </div>
+</div></div></div></div></body></html>

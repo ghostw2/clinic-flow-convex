@@ -1,0 +1,213 @@
+<!doctype html><html><head><meta charset="utf-8"><style>@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+/* ClinicFlow — design tokens (shadcn-compatible names) */
+:root{
+  --background:#F6F8F5; --card:#FFFFFF; --foreground:#13221D; --muted:#EFF3EE; --muted-foreground:#66746E;
+  --border:#E2E8E2; --input:#D9E1DA; --ring:#3FA66B;
+  --primary:#1E6B4E; --primary-hover:#185A41; --primary-foreground:#FFFFFF;
+  --brand-50:#EEF8EA; --brand-100:#DDF2D5; --brand-200:#BFE6B2; --brand-300:#98D78A; --brand-500:#3FA66B; --brand-700:#1E6B4E; --brand-900:#14302A; --brand-950:#0E231F;
+  --sidebar:#14302A; --sidebar-fg:#C9DAD3; --sidebar-muted:#86A298; --sidebar-active:#1F4239;
+  --destructive:#C2382B;
+  /* status */
+  --s-booked:#2F5BD8; --s-booked-bg:#E7EEFD;
+  --s-arrived:#0F7C8A; --s-arrived-bg:#DCF5F7;
+  --s-progress:#7A3BE0; --s-progress-bg:#F1E9FE;
+  --s-done:#23773B; --s-done-bg:#E2F5DE;
+  --s-noshow:#9A650C; --s-noshow-bg:#FCF0D9;
+  --s-cancel:#B42318; --s-cancel-bg:#FBE5E2;
+  --s-neutral:#5B6660; --s-neutral-bg:#EEF1EE;
+  /* service colours (calendar) */
+  --svc-consult:#3FA66B; --svc-clean:#14A3B8; --svc-fill:#4A6CF0; --svc-extract:#E0607E; --svc-white:#E5A31A; --svc-check:#8B5CF6; --svc-canal:#F07B3F;
+  --radius:10px; --radius-lg:14px; --radius-sm:7px;
+  --shadow-sm:0 1px 2px rgba(16,34,29,.06); --shadow:0 1px 3px rgba(16,34,29,.06),0 6px 16px -6px rgba(16,34,29,.10);
+  --shadow-lg:0 24px 60px -12px rgba(16,34,29,.28),0 2px 6px rgba(16,34,29,.08);
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:Inter,system-ui,sans-serif;color:var(--foreground);-webkit-font-smoothing:antialiased;font-size:14px;line-height:1.45;font-feature-settings:"cv11","ss01"}
+.frame{position:relative;overflow:hidden;background:var(--background);flex:none}
+svg.i{width:16px;height:16px;flex:none;stroke-width:1.8}
+.i-sm svg.i, svg.i.sm{width:14px;height:14px}
+.i-lg svg.i, svg.i.lg{width:20px;height:20px}
+.row{display:flex;align-items:center}
+.col{display:flex;flex-direction:column}
+.gap4{gap:4px}.gap6{gap:6px}.gap8{gap:8px}.gap10{gap:10px}.gap12{gap:12px}.gap16{gap:16px}.gap20{gap:20px}.gap24{gap:24px}
+.grow{flex:1;min-width:0}.between{justify-content:space-between}.center{justify-content:center}
+.muted{color:var(--muted-foreground)}.xs{font-size:12px}.sm{font-size:13px}.md{font-size:15px}.lg{font-size:18px}
+.b5{font-weight:500}.b6{font-weight:600}.b7{font-weight:700}
+.num{font-variant-numeric:tabular-nums}
+.ellipsis{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+
+/* ---------- app shell ---------- */
+.app{display:flex;height:100%}
+.sidebar{width:236px;background:var(--sidebar);color:var(--sidebar-fg);display:flex;flex-direction:column;padding:16px 12px;gap:4px;flex:none}
+.logo{display:flex;align-items:center;gap:10px;padding:4px 8px 14px;color:#fff;font-weight:700;font-size:17px;letter-spacing:-.02em}
+.logo-mark{width:30px;height:30px;border-radius:9px;background:var(--brand-300);display:flex;align-items:center;justify-content:center;color:var(--brand-950)}
+.logo-mark svg{width:18px;height:18px;stroke-width:2.4}
+.clinic-card{background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.08);border-radius:10px;padding:10px 10px;display:flex;align-items:center;gap:10px;margin-bottom:10px}
+.clinic-card .av{width:30px;height:30px;border-radius:8px;background:#F4C9C9;color:#6B1F2A;font-weight:700;font-size:12px;display:flex;align-items:center;justify-content:center}
+.clinic-card .t{color:#fff;font-weight:600;font-size:13px}
+.clinic-card .s{color:var(--sidebar-muted);font-size:11.5px}
+.nav-label{font-size:11px;letter-spacing:.06em;text-transform:uppercase;color:var(--sidebar-muted);padding:12px 10px 6px;font-weight:600}
+.nav{display:flex;align-items:center;gap:10px;padding:8px 10px;border-radius:8px;font-size:13.5px;font-weight:500;color:var(--sidebar-fg);position:relative}
+.nav svg.i{color:var(--sidebar-muted)}
+.nav.active{background:var(--sidebar-active);color:#fff}
+.nav.active svg.i{color:var(--brand-300)}
+.nav.active::before{content:"";position:absolute;left:-12px;top:8px;bottom:8px;width:3px;border-radius:0 3px 3px 0;background:var(--brand-300)}
+.nav .kbd{margin-left:auto}
+.nav .count{margin-left:auto;font-size:11px;background:rgba(255,255,255,.08);padding:1px 7px;border-radius:99px;color:var(--sidebar-fg)}
+.setup-card{background:rgba(152,215,138,.10);border:1px solid rgba(152,215,138,.22);border-radius:10px;padding:11px 12px;margin:6px 0 4px}
+.setup-card .t{color:#fff;font-size:12.5px;font-weight:600}
+.progress{height:5px;background:rgba(255,255,255,.12);border-radius:9px;overflow:hidden;margin:8px 0 6px}
+.progress>div{height:100%;background:var(--brand-300);border-radius:9px}
+.sidebar .spacer{flex:1}
+.user{display:flex;align-items:center;gap:10px;padding:10px 8px 2px;border-top:1px solid rgba(255,255,255,.08);margin-top:6px}
+.avatar{width:32px;height:32px;border-radius:99px;background:var(--brand-200);color:var(--brand-950);font-weight:600;font-size:12px;display:flex;align-items:center;justify-content:center;flex:none}
+.avatar.sm{width:26px;height:26px;font-size:10.5px}
+.avatar.lg{width:56px;height:56px;font-size:19px}
+.avatar.pink{background:#F8D7DA;color:#7A2230}.avatar.blue{background:#DCE6FD;color:#1E3A8A}.avatar.amber{background:#FBEBC5;color:#7A4E07}.avatar.violet{background:#EBDDFD;color:#4C1D95}.avatar.teal{background:#CFF1F4;color:#0B5563}
+.lang{display:flex;background:rgba(255,255,255,.07);border-radius:7px;padding:2px;font-size:11px;font-weight:600;margin-left:auto}
+.lang span{padding:3px 7px;border-radius:5px;color:var(--sidebar-muted)}
+.lang span.on{background:rgba(255,255,255,.14);color:#fff}
+
+.main{flex:1;display:flex;flex-direction:column;min-width:0}
+.topbar{height:60px;display:flex;align-items:center;gap:12px;padding:0 28px;border-bottom:1px solid var(--border);background:var(--card);flex:none}
+.topbar h1{font-size:18px;font-weight:650;letter-spacing:-.015em}
+.crumb{font-size:13px;color:var(--muted-foreground);display:flex;align-items:center;gap:6px}
+.search{white-space:nowrap;display:flex;align-items:center;gap:8px;height:36px;padding:0 8px 0 12px;background:var(--muted);border:1px solid transparent;border-radius:9px;color:var(--muted-foreground);font-size:13px;width:300px}
+.kbd{font-size:11px;font-weight:600;color:var(--muted-foreground);background:var(--card);border:1px solid var(--border);border-bottom-width:2px;border-radius:5px;padding:0 5px;line-height:17px;font-family:Inter}
+.sidebar .kbd{background:rgba(255,255,255,.06);border-color:rgba(255,255,255,.1);color:var(--sidebar-muted)}
+.content{flex:1;padding:24px 28px;overflow:hidden;min-height:0}
+
+/* ---------- primitives ---------- */
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:7px;height:36px;padding:0 14px;border-radius:9px;font-size:13.5px;font-weight:600;border:1px solid var(--border);background:var(--card);color:var(--foreground);white-space:nowrap;box-shadow:var(--shadow-sm)}
+.btn.primary{background:var(--primary);border-color:var(--primary);color:#fff}
+.btn.mint{background:var(--brand-100);border-color:var(--brand-200);color:var(--brand-900)}
+.btn.dark{background:var(--brand-950);border-color:var(--brand-950);color:#fff}
+.btn.ghost{background:transparent;border-color:transparent;box-shadow:none}
+.btn.danger{color:var(--destructive)}
+.btn.sm{height:30px;padding:0 10px;font-size:12.5px;border-radius:7px}
+.btn.lg{height:46px;padding:0 20px;font-size:15px;border-radius:11px}
+.btn.xl{height:56px;padding:0 22px;font-size:16px;border-radius:12px}
+.btn.icon{width:36px;padding:0}.btn.sm.icon{width:30px}
+.card{background:var(--card);border:1px solid var(--border);border-radius:var(--radius-lg);box-shadow:var(--shadow-sm)}
+.card-h{display:flex;align-items:center;gap:10px;padding:16px 18px 12px}
+.card-h h3{font-size:14.5px;font-weight:650;letter-spacing:-.01em}
+.card-b{padding:0 18px 16px}
+.divider{height:1px;background:var(--border)}
+.badge{display:inline-flex;align-items:center;gap:5px;height:22px;padding:0 9px 0 7px;border-radius:99px;font-size:12px;font-weight:550;white-space:nowrap}
+.badge svg.i{width:13px;height:13px;stroke-width:2}
+.badge.booked{background:var(--s-booked-bg);color:var(--s-booked)}
+.badge.arrived{background:var(--s-arrived-bg);color:var(--s-arrived)}
+.badge.progress{background:var(--s-progress-bg);color:var(--s-progress)}
+.badge.done,.badge.paid{background:var(--s-done-bg);color:var(--s-done)}
+.badge.noshow,.badge.partial{background:var(--s-noshow-bg);color:var(--s-noshow)}
+.badge.cancel,.badge.unpaid{background:var(--s-cancel-bg);color:var(--s-cancel)}
+.badge.neutral{background:var(--s-neutral-bg);color:var(--s-neutral)}
+.dot{width:8px;height:8px;border-radius:99px;flex:none;display:inline-block}
+.chip{display:inline-flex;align-items:center;gap:6px;height:30px;padding:0 11px;border:1px solid var(--border);border-radius:8px;background:var(--card);font-size:12.5px;font-weight:500;color:var(--foreground)}
+.chip.on{background:var(--brand-950);border-color:var(--brand-950);color:#fff}
+.seg{display:inline-flex;background:var(--muted);border-radius:9px;padding:3px;gap:2px}
+.seg span{white-space:nowrap;padding:5px 12px;border-radius:7px;font-size:12.5px;font-weight:550;color:var(--muted-foreground)}
+.seg span.on{background:var(--card);color:var(--foreground);box-shadow:var(--shadow-sm)}
+.field{display:flex;flex-direction:column;gap:6px}
+.label{font-size:12.5px;font-weight:600;color:var(--foreground)}
+.label .req{color:var(--destructive)}
+.input{height:40px;border:1px solid var(--input);border-radius:9px;background:var(--card);display:flex;align-items:center;gap:8px;padding:0 12px;font-size:13.5px;color:var(--foreground)}
+.input.ph{color:#98A39E}
+.input.focus{border-color:var(--ring);box-shadow:0 0 0 3px rgba(63,166,107,.18)}
+.input.area{height:auto;min-height:84px;align-items:flex-start;padding:10px 12px;line-height:1.5}
+.hint{font-size:12px;color:var(--muted-foreground)}
+.tabs{display:flex;gap:22px;border-bottom:1px solid var(--border)}
+.tabs span{padding:10px 0 11px;font-size:13.5px;font-weight:550;color:var(--muted-foreground);position:relative;display:flex;align-items:center;gap:6px}
+.tabs span.on{color:var(--foreground)}
+.tabs span.on::after{content:"";position:absolute;left:0;right:0;bottom:-1px;height:2px;background:var(--brand-700);border-radius:2px}
+.tabs .n{font-size:11px;background:var(--muted);border-radius:99px;padding:0 6px;color:var(--muted-foreground)}
+
+/* DataTable */
+.table{width:100%;border-collapse:separate;border-spacing:0;font-size:13.5px}
+.table th{font-size:11.5px;font-weight:600;letter-spacing:.04em;text-transform:uppercase;color:var(--muted-foreground);text-align:left;padding:10px 12px;border-bottom:1px solid var(--border);background:#FAFBFA;white-space:nowrap}
+.table td{padding:0 12px;height:52px;border-bottom:1px solid var(--border);white-space:nowrap}
+.table tr.sel td{background:var(--brand-50)}
+.table td.r,.table th.r{text-align:right}
+.cb{width:16px;height:16px;border:1.5px solid #C4CEC7;border-radius:4.5px;background:#fff;display:inline-block;vertical-align:middle}
+.cb.on{background:var(--brand-700);border-color:var(--brand-700);position:relative}
+.money{font-variant-numeric:tabular-nums;font-weight:550}
+.neg{color:var(--s-cancel)}.pos{color:var(--s-done)}
+
+/* stat */
+.stat{padding:16px 18px}
+.stat .k{font-size:12.5px;color:var(--muted-foreground);font-weight:550;display:flex;align-items:center;gap:6px}
+.stat .v{font-size:26px;font-weight:700;letter-spacing:-.025em;margin-top:6px;font-variant-numeric:tabular-nums}
+.stat .d{font-size:12px;margin-top:4px;color:var(--muted-foreground)}
+.trend-up{color:var(--s-done);font-weight:600}
+
+/* drawer / overlays */
+.scrim{position:absolute;inset:0;background:rgba(14,35,31,.38)}
+.drawer{position:absolute;top:0;right:0;bottom:0;background:var(--card);box-shadow:var(--shadow-lg);display:flex;flex-direction:column;border-left:1px solid var(--border)}
+.drawer-h{display:flex;align-items:center;gap:10px;padding:16px 20px;border-bottom:1px solid var(--border)}
+.drawer-f{margin-top:auto;border-top:1px solid var(--border);padding:14px 20px;display:flex;gap:10px;align-items:center;background:#FBFCFB}
+.modal{position:absolute;background:var(--card);border-radius:16px;box-shadow:var(--shadow-lg);border:1px solid var(--border)}
+
+/* calendar */
+.cal{display:grid;position:relative}
+.cal-hours .h{height:64px;font-size:11.5px;color:var(--muted-foreground);text-align:right;padding-right:10px;transform:translateY(-7px)}
+.slot-line{position:absolute;left:0;right:0;border-top:1px solid var(--border)}
+.slot-line.half{border-top:1px dashed #EDF1ED}
+.appt{position:absolute;justify-content:center;left:6px;right:6px;border-radius:9px;padding:7px 10px;font-size:12.5px;overflow:hidden;border:1px solid transparent;display:flex;flex-direction:column;gap:2px}
+.appt .t{font-weight:650;color:var(--foreground);font-size:12.5px}
+.appt .m{font-size:11.5px;color:var(--muted-foreground)}
+.appt::before{content:"";position:absolute;left:0;top:0;bottom:0;width:4px}
+.appt.sel{box-shadow:0 0 0 2px var(--brand-700),var(--shadow);}
+.now-line{position:absolute;left:0;right:0;height:2px;background:#E0485F}
+.now-line::before{content:"";position:absolute;left:-5px;top:-4px;width:10px;height:10px;border-radius:99px;background:#E0485F}
+
+/* misc */
+.kv{display:grid;grid-template-columns:130px 1fr;row-gap:10px;font-size:13.5px}
+.kv .k{color:var(--muted-foreground)}
+.pill-tab{display:inline-flex;align-items:center;gap:6px}
+.hr-dash{border-top:1px dashed var(--border)}
+.timeline{position:relative}
+.tl-item{display:flex;gap:12px;position:relative;padding-bottom:16px}
+.tl-dot{width:26px;height:26px;border-radius:99px;display:flex;align-items:center;justify-content:center;flex:none;z-index:1}
+.tl-dot svg.i{width:13px;height:13px;stroke-width:2.2}
+.tl-line{position:absolute;left:12.5px;top:26px;bottom:0;width:1px;background:var(--border)}
+.icon-tile{width:36px;height:36px;border-radius:10px;display:flex;align-items:center;justify-content:center;flex:none}
+.note{font-size:11px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:var(--muted-foreground)}
+</style></head><body style="margin:0;background:#fff"><div class="frame" data-name="13 Mobile — Today agenda (SQ)" style="width:390px;height:844px">
+<div style="height:100%;background:var(--background);position:relative">
+  <div class="row between" style="height:48px;padding:0 26px 0 32px;font-size:15px;font-weight:600"><span>9:41</span><span class="row gap6"><svg class="i sm"xmlns="http://www.w3.org/2000/svg"viewBox="0 0 24 24"fill="none"stroke="currentColor"stroke-width="2"stroke-linecap="round"stroke-linejoin="round"><path d="M2 20h.01" /><path d="M7 20v-4" /><path d="M12 20v-8" /><path d="M17 20V8" /><path d="M22 4v16" /></svg><svg class="i sm"xmlns="http://www.w3.org/2000/svg"viewBox="0 0 24 24"fill="none"stroke="currentColor"stroke-width="2"stroke-linecap="round"stroke-linejoin="round"><path d="M12 20h.01" /><path d="M2 8.82a15 15 0 0 1 20 0" /><path d="M5 12.859a10 10 0 0 1 14 0" /><path d="M8.5 16.429a5 5 0 0 1 7 0" /></svg><svg class="i sm"xmlns="http://www.w3.org/2000/svg"viewBox="0 0 24 24"fill="none"stroke="currentColor"stroke-width="2"stroke-linecap="round"stroke-linejoin="round"><path d="M10 10v4" /><path d="M14 10v4" /><path d="M22 14v-4" /><path d="M6 10v4" /><rect x="2" y="6" width="16" height="12" rx="2" /></svg></span></div>
+  <div style="padding:6px 20px 12px"><div class="row between"><div><div class="xs muted b6">E hënë, 28 shtator</div><div class="b7" style="font-size:26px;letter-spacing:-.03em">Sot</div></div><div class="row gap8"><div class="btn icon" style="border-radius:99px"><svg class="i "xmlns="http://www.w3.org/2000/svg"viewBox="0 0 24 24"fill="none"stroke="currentColor"stroke-width="2"stroke-linecap="round"stroke-linejoin="round"><path d="m21 21-4.34-4.34" /><circle cx="11" cy="11" r="8" /></svg></div><div class="avatar">EH</div></div></div>
+    <div class="row gap6" style="margin-top:14px"><div class="col grow" style="align-items:center;padding:7px 0;border-radius:12px;background:var(--brand-900);color:#fff"><span style="font-size:10.5px;opacity:.75">H</span><span class="b7">28</span></div><div class="col grow" style="align-items:center;padding:7px 0;border-radius:12px;background:#fff;border:1px solid var(--border)"><span style="font-size:10.5px;opacity:.75">M</span><span class="b7">29</span></div><div class="col grow" style="align-items:center;padding:7px 0;border-radius:12px;background:#fff;border:1px solid var(--border)"><span style="font-size:10.5px;opacity:.75">M</span><span class="b7">30</span></div><div class="col grow" style="align-items:center;padding:7px 0;border-radius:12px;background:#fff;border:1px solid var(--border)"><span style="font-size:10.5px;opacity:.75">E</span><span class="b7">1</span></div><div class="col grow" style="align-items:center;padding:7px 0;border-radius:12px;background:#fff;border:1px solid var(--border)"><span style="font-size:10.5px;opacity:.75">P</span><span class="b7">2</span></div><div class="col grow" style="align-items:center;padding:7px 0;border-radius:12px;background:#fff;border:1px solid var(--border)"><span style="font-size:10.5px;opacity:.75">Sh</span><span class="b7">3</span></div><div class="col grow" style="align-items:center;padding:7px 0;border-radius:12px;background:#fff;border:1px solid var(--border)"><span style="font-size:10.5px;opacity:.75">D</span><span class="b7">4</span></div></div>
+  </div>
+  <div class="row gap8" style="padding:0 20px 10px"><div class="card grow" style="padding:10px 12px"><div class="xs muted">Arkëtuar</div><div class="b7 num">ALL 7,500</div></div><div class="card grow" style="padding:10px 12px"><div class="xs muted">Pa paguar</div><div class="b7 num" style="color:var(--s-cancel)">ALL 64,200</div></div></div>
+  <div class="col gap8" style="padding:0 16px">
+  <div class="card row gap12" style="padding:11px 12px;border-radius:14px;opacity:.6">
+    <span style="width:4px;align-self:stretch;border-radius:4px;background:var(--svc-check)"></span>
+    <div style="width:42px"><div class="sm b7 num">08:30</div></div>
+    <div class="grow" style="min-width:0"><div class="sm b6 ellipsis" style="">Blerina Dervishi</div><div class="xs muted">Kontroll</div></div>
+    <span class="badge done" style="font-size:11px">Kryer</span></div><div class="card row gap12" style="padding:11px 12px;border-radius:14px;">
+    <span style="width:4px;align-self:stretch;border-radius:4px;background:var(--svc-consult)"></span>
+    <div style="width:42px"><div class="sm b7 num">09:45</div></div>
+    <div class="grow" style="min-width:0"><div class="sm b6 ellipsis" style="text-decoration:line-through">Klodiana Meta</div><div class="xs muted">Konsultë</div></div>
+    <span class="badge noshow" style="font-size:11px">Nuk erdhi</span></div><div class="card row gap12" style="padding:11px 12px;border-radius:14px;border-color:var(--brand-500);box-shadow:0 0 0 3px rgba(63,166,107,.14)">
+    <span style="width:4px;align-self:stretch;border-radius:4px;background:var(--svc-fill)"></span>
+    <div style="width:42px"><div class="sm b7 num">10:30</div></div>
+    <div class="grow" style="min-width:0"><div class="sm b6 ellipsis" style="">Arta Hoxha</div><div class="xs muted">Mbushje · 36</div></div>
+    <span class="badge progress" style="font-size:11px">Në proces</span></div><div class="card row gap12" style="padding:11px 12px;border-radius:14px;">
+    <span style="width:4px;align-self:stretch;border-radius:4px;background:var(--svc-canal)"></span>
+    <div style="width:42px"><div class="sm b7 num">11:15</div></div>
+    <div class="grow" style="min-width:0"><div class="sm b6 ellipsis" style="">Ervin Shehu</div><div class="xs muted">Kanal 2/3</div></div>
+    <span class="badge arrived" style="font-size:11px">Mbërriti</span></div><div class="card row gap12" style="padding:11px 12px;border-radius:14px;">
+    <span style="width:4px;align-self:stretch;border-radius:4px;background:var(--svc-white)"></span>
+    <div style="width:42px"><div class="sm b7 num">12:00</div></div>
+    <div class="grow" style="min-width:0"><div class="sm b6 ellipsis" style="">Mirela Kola</div><div class="xs muted">Zbardhim · Besa</div></div>
+    <span class="badge booked" style="font-size:11px">Rezervuar</span></div><div class="card row gap12" style="padding:11px 12px;border-radius:14px;">
+    <span style="width:4px;align-self:stretch;border-radius:4px;background:var(--svc-check)"></span>
+    <div style="width:42px"><div class="sm b7 num">15:30</div></div>
+    <div class="grow" style="min-width:0"><div class="sm b6 ellipsis" style="">Luan Bregu</div><div class="xs muted">Kontroll</div></div>
+    <span class="badge booked" style="font-size:11px">Rezervuar</span></div>
+  </div>
+  <div style="position:absolute;right:20px;bottom:104px;width:58px;height:58px;border-radius:18px;background:var(--primary);color:#fff;display:flex;align-items:center;justify-content:center;box-shadow:var(--shadow-lg)"><svg class="i lg"xmlns="http://www.w3.org/2000/svg"viewBox="0 0 24 24"fill="none"stroke="currentColor"stroke-width="2"stroke-linecap="round"stroke-linejoin="round"><path d="M5 12h14" /><path d="M12 5v14" /></svg></div>
+  <div class="row" style="position:absolute;left:0;right:0;bottom:0;height:84px;background:#fff;border-top:1px solid var(--border);padding:8px 8px 26px">
+  <div class="col grow" style="align-items:center;gap:3px;color:var(--brand-700)"><svg class="i lg"xmlns="http://www.w3.org/2000/svg"viewBox="0 0 24 24"fill="none"stroke="currentColor"stroke-width="2"stroke-linecap="round"stroke-linejoin="round"><path d="M8 2v3" /><path d="M16 2v3" /><rect x="3" y="3" width="18" height="18" rx="2" /><path d="M3 9h18" /><path d="M8 13h.01" /><path d="M12 13h.01" /><path d="M16 13h.01" /><path d="M8 17h.01" /><path d="M12 17h.01" /><path d="M16 17h.01" /></svg><span style="font-size:10.5px;font-weight:600">Sot</span></div><div class="col grow" style="align-items:center;gap:3px;color:var(--muted-foreground)"><svg class="i lg"xmlns="http://www.w3.org/2000/svg"viewBox="0 0 24 24"fill="none"stroke="currentColor"stroke-width="2"stroke-linecap="round"stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2" /><path d="M16 3.128a4 4 0 0 1 0 7.744" /><path d="M22 21v-2a4 4 0 0 0-3-3.87" /><circle cx="9" cy="7" r="4" /></svg><span style="font-size:10.5px;font-weight:600">Pacientët</span></div><div class="col grow" style="align-items:center;gap:3px;color:var(--muted-foreground)"><svg class="i lg"xmlns="http://www.w3.org/2000/svg"viewBox="0 0 24 24"fill="none"stroke="currentColor"stroke-width="2"stroke-linecap="round"stroke-linejoin="round"><path d="M19 7V4a1 1 0 0 0-1-1H5a2 2 0 0 0 0 4h15a1 1 0 0 1 1 1v4h-3a2 2 0 0 0 0 4h3a1 1 0 0 0 1-1v-2a1 1 0 0 0-1-1" /><path d="M3 5v14a2 2 0 0 0 2 2h15a1 1 0 0 0 1-1v-4" /></svg><span style="font-size:10.5px;font-weight:600">Financat</span></div><div class="col grow" style="align-items:center;gap:3px;color:var(--muted-foreground)"><svg class="i lg"xmlns="http://www.w3.org/2000/svg"viewBox="0 0 24 24"fill="none"stroke="currentColor"stroke-width="2"stroke-linecap="round"stroke-linejoin="round"><path d="M4 5h16" /><path d="M4 12h16" /><path d="M4 19h16" /></svg><span style="font-size:10.5px;font-weight:600">Më shumë</span></div>
+</div>
+</div></div></body></html>
