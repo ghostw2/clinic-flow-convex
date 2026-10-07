@@ -58,12 +58,12 @@ export default function FinancesPage() {
       }
     >
       <div className="flex flex-col gap-5">
-        <div className="flex gap-5 border-b border-border">
+        <div className="flex gap-5 overflow-x-auto border-b border-border">
           {tabs.map((tabItem) => (
             <Link
               key={tabItem.key}
               href={`/finances?tab=${tabItem.key}`}
-              className={`flex items-center gap-1.5 border-b-2 pb-2.5 text-[13.5px] font-semibold ${
+              className={`flex shrink-0 items-center gap-1.5 border-b-2 pb-2.5 text-[13.5px] font-semibold whitespace-nowrap ${
                 tab === tabItem.key
                   ? "border-brand-700 text-foreground"
                   : "border-transparent text-muted-foreground"
@@ -81,7 +81,7 @@ export default function FinancesPage() {
 
         {tab === "today" && (
           <div className="flex flex-col gap-4">
-            <div className="grid grid-cols-4 gap-3">
+            <div className="grid grid-cols-2 gap-3 md:grid-cols-4">
               <StatTile label={t("cash")} value={<MoneyAmount amount={totals.cash} />} />
               <StatTile label={t("card")} value={<MoneyAmount amount={totals.card} />} />
               <StatTile label={t("bankTransfer")} value={<MoneyAmount amount={totals.transfer} />} />
@@ -95,6 +95,7 @@ export default function FinancesPage() {
               {!payments || payments.length === 0 ? (
                 <p className="p-[18px] text-sm text-muted-foreground">{t("noPaymentsToday")}</p>
               ) : (
+                <div className="overflow-x-auto">
                 <table className="w-full text-[13.5px]">
                   <thead>
                     <tr className="bg-muted/40 text-left text-[11.5px] font-semibold tracking-wide text-muted-foreground uppercase">
@@ -129,6 +130,7 @@ export default function FinancesPage() {
                     ))}
                   </tbody>
                 </table>
+                </div>
               )}
             </div>
           </div>

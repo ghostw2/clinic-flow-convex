@@ -117,7 +117,7 @@ export default function DashboardPage() {
           </div>
         )}
 
-        <div className="grid grid-cols-3 gap-3">
+        <div className="grid grid-cols-2 gap-3 md:grid-cols-3">
           <StatTile label={t("appointmentsToday")} value={todayAppts?.length ?? "…"} />
           <StatTile label={t("arrivalsPending")} value={arrivalsPending.length} />
           <StatTile label={t("collectedToday")} value={<MoneyAmount amount={collectedToday} tone="positive" />} />
@@ -132,7 +132,7 @@ export default function DashboardPage() {
           <StatTile label={t("noShowsThisWeek")} value={noShowsThisWeek.length} />
         </div>
 
-        <div className="grid grid-cols-[1fr_360px] items-start gap-5">
+        <div className="grid grid-cols-1 gap-5 md:grid-cols-[1fr_360px] items-start">
           <div className="overflow-hidden rounded-[14px] border border-border bg-card">
             <div className="flex items-center justify-between border-b border-border px-[18px] py-3.5">
               <h3 className="text-[14.5px] font-semibold">{t("todaysSchedule")}</h3>

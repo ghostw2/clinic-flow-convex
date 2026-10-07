@@ -42,7 +42,7 @@ export function Segmented<T extends string>({
     <div
       data-slot="segmented"
       role="tablist"
-      className={cn("inline-flex gap-0.5 rounded-lg bg-muted p-[3px]", className)}
+      className={cn("inline-flex max-w-full gap-0.5 overflow-x-auto rounded-lg bg-muted p-[3px]", className)}
     >
       {options.map((option) => {
         const isOn = option.value === value;
@@ -54,7 +54,7 @@ export function Segmented<T extends string>({
             aria-selected={isOn}
             onClick={() => onValueChange(option.value)}
             className={cn(
-              "rounded-md px-3 py-[5px] text-xs font-semibold whitespace-nowrap text-muted-foreground",
+              "shrink-0 rounded-md px-3 py-[5px] text-xs font-semibold whitespace-nowrap text-muted-foreground",
               isOn && "bg-card text-foreground shadow-card-sm",
             )}
           >

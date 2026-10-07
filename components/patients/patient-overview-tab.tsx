@@ -46,7 +46,7 @@ export function PatientOverviewTab({ patient }: { patient: Doc<"patients"> }) {
   const visits = charges && payments && appointments ? recentVisits(charges, payments, appointments) : [];
 
   return (
-    <div className="grid grid-cols-[1fr_360px] items-start gap-5">
+    <div className="grid grid-cols-1 gap-5 md:grid-cols-[1fr_360px] items-start">
       <div className="flex flex-col gap-5">
         <div className="rounded-[14px] border border-border bg-card p-[18px]">
           <div className="mb-3 flex items-center justify-between">

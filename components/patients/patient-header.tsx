@@ -26,7 +26,7 @@ export function PatientHeader({
   const payInFullCash = useMutation(api.billing.payments.payInFullCash);
 
   return (
-    <div className="flex items-start justify-between gap-4">
+    <div className="flex flex-wrap items-start justify-between gap-4">
       <div className="flex items-center gap-3.5">
         <Avatar size="lg" className={avatarTint(patient._id)}>
           <AvatarFallback className={avatarTint(patient._id)}>{initials(name)}</AvatarFallback>
@@ -46,7 +46,7 @@ export function PatientHeader({
         </div>
       </div>
 
-      <div className="flex items-center gap-2.5">
+      <div className="flex flex-wrap items-center gap-2.5">
         <BalanceCard
           balance={patient.balance}
           label={patient.balance > 0 ? t("balanceOwed") : t("balanceClear")}

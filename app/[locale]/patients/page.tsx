@@ -25,6 +25,7 @@ import { ServiceDot } from "@/components/service-dot";
 import { NewPatientDrawer } from "@/components/patients/new-patient-drawer";
 import { avatarTint, initials } from "@/lib/format";
 import { ageFromDob, sexLetter, formatDate } from "@/lib/patient-format";
+import { useMediaQuery } from "@/lib/use-media-query";
 
 type Segment = "all" | "owesMoney" | "seenThisMonth" | "archived";
 type Patient = Doc<"patients">;
@@ -45,10 +46,47 @@ function PatientsListSkeleton() {
   );
 }
 
+function PatientsMobileList({
+  rows,
+  onOpen,
+}: {
+  rows: Patient[];
+  onOpen: (id: string) => void;
+}) {
+  return (
+    <div className="divide-y divide-border overflow-hidden rounded-[14px] border border-border bg-card">
+      {rows.map((p) => {
+        const name = `${p.firstName} ${p.lastName}`;
+        return (
+          <button
+            key={p._id}
+            type="button"
+            onClick={() => onOpen(p._id)}
+            className="flex w-full items-center gap-3 px-4 py-3 text-left hover:bg-muted/40"
+          >
+            <Avatar size="sm" className={avatarTint(p._id)}>
+              <AvatarFallback className={avatarTint(p._id)}>{initials(name)}</AvatarFallback>
+            </Avatar>
+            <div className="min-w-0 grow">
+              <div className="truncate text-sm font-semibold">{name}</div>
+              <div className="truncate text-xs text-muted-foreground">
+                {p.phone}
+                {p.lastServiceName ? ` · ${p.lastServiceName}` : ""}
+              </div>
+            </div>
+            <MoneyAmount amount={p.balance} tone={p.balance > 0 ? "negative" : "muted"} />
+          </button>
+        );
+      })}
+    </div>
+  );
+}
+
 export default function PatientsListPage() {
   const t = useTranslations("Patients");
   const locale = useLocale();
   const router = useRouter();
+  const isMobile = useMediaQuery("(max-width: 767px)");
 
   const [segment, setSegment] = React.useState<Segment>("all");
   const [search, setSearch] = React.useState("");
@@ -242,15 +280,17 @@ export default function PatientsListPage() {
             ]}
           />
           <div className="grow" />
-          <Chip disabled title={t("comingSoon")}>
-            <SlidersHorizontal className="size-3.5" /> {t("filter")}
-          </Chip>
-          <Chip disabled title={t("comingSoon")}>
-            <Columns3 className="size-3.5" /> {t("columns")}
-          </Chip>
-          <Chip disabled title={t("comingSoon")}>
-            <Download className="size-3.5" /> {t("export")}
-          </Chip>
+          <div className="hidden items-center gap-2 md:flex">
+            <Chip disabled title={t("comingSoon")}>
+              <SlidersHorizontal className="size-3.5" /> {t("filter")}
+            </Chip>
+            <Chip disabled title={t("comingSoon")}>
+              <Columns3 className="size-3.5" /> {t("columns")}
+            </Chip>
+            <Chip disabled title={t("comingSoon")}>
+              <Download className="size-3.5" /> {t("export")}
+            </Chip>
+          </div>
         </div>
 
         {isLoading ? (
@@ -261,6 +301,15 @@ export default function PatientsListPage() {
             <p className="text-sm text-muted-foreground">
               {debouncedSearch ? t("noSearchResultsHint") : t("noPatientsHint")}
             </p>
+          </div>
+        ) : isMobile ? (
+          <div className="flex flex-col gap-3">
+            <PatientsMobileList rows={rows} onOpen={(id) => router.push(`/patients/${id}`)} />
+            {!debouncedSearch && status === "CanLoadMore" && (
+              <Button variant="outline" size="sm" onClick={() => loadMore(20)}>
+                {t("loadMore")}
+              </Button>
+            )}
           </div>
         ) : (
           <DataTable

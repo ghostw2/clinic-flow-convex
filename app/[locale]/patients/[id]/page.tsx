@@ -4,11 +4,13 @@ import * as React from "react";
 import { useMutation, useQuery } from "convex/react";
 import { useTranslations } from "next-intl";
 import { useParams, useSearchParams } from "next/navigation";
+import { ArrowLeft } from "lucide-react";
 import { cn } from "cn";
 import { api } from "@/convex/_generated/api";
 import type { Id } from "@/convex/_generated/dataModel";
 import { Link } from "@/i18n/navigation";
 import { AppShell } from "@/components/app-shell";
+import { useMediaQuery } from "@/lib/use-media-query";
 import { PatientHeader } from "@/components/patients/patient-header";
 import { PatientOverviewTab } from "@/components/patients/patient-overview-tab";
 import { PatientBillingTab } from "@/components/patients/patient-billing-tab";
@@ -23,6 +25,7 @@ export default function PatientRecordPage() {
   const searchParams = useSearchParams();
   const t = useTranslations("PatientRecord");
   const tab = (searchParams.get("tab") as Tab | null) ?? "overview";
+  const isMobile = useMediaQuery("(max-width: 767px)");
 
   const patientId = params.id as Id<"patients">;
   const patient = useQuery(api.patients.getPatient, { patientId });
@@ -89,15 +92,29 @@ export default function PatientRecordPage() {
       }
     >
       <div className="flex flex-col gap-5">
+        {isMobile && (
+          <div className="flex items-center gap-2 px-4 pt-4">
+            <Link
+              href="/patients"
+              className="flex size-8 shrink-0 items-center justify-center rounded-md text-muted-foreground hover:bg-muted"
+            >
+              <ArrowLeft className="size-5" />
+            </Link>
+            <span className="truncate text-[15px] font-semibold">
+              {patient.firstName} {patient.lastName}
+            </span>
+          </div>
+        )}
+
         <PatientHeader patient={patient} openChargeSummary={openSummary} />
 
-        <div className="flex gap-5 border-b border-border">
+        <div className="flex gap-5 overflow-x-auto border-b border-border">
           {tabs.map((tabItem) => (
             <Link
               key={tabItem.key}
               href={`/patients/${patientId}?tab=${tabItem.key}`}
               className={cn(
-                "flex items-center gap-1.5 border-b-2 pb-2.5 text-[13.5px] font-semibold",
+                "flex shrink-0 items-center gap-1.5 border-b-2 pb-2.5 text-[13.5px] font-semibold whitespace-nowrap",
                 tab === tabItem.key
                   ? "border-brand-700 text-foreground"
                   : "border-transparent text-muted-foreground",

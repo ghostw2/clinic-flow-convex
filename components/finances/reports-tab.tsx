@@ -148,20 +148,20 @@ export function ReportsTab() {
         <div className="h-64 animate-pulse rounded-[14px] bg-muted" />
       ) : (
         <>
-          <div className="grid grid-cols-4 gap-3">
+          <div className="grid grid-cols-2 gap-3 md:grid-cols-4">
             <StatTile label={t("totalCollected")} value={<MoneyAmount amount={financial.totalCollected} tone="positive" />} />
             <StatTile label={t("totalCharged")} value={<MoneyAmount amount={financial.totalCharged} />} />
             <StatTile label={t("newPatients")} value={operations.newPatients} />
             <StatTile label={t("returningPatients")} value={operations.returningPatients} />
           </div>
 
-          <div className="grid grid-cols-3 gap-3">
+          <div className="grid grid-cols-2 gap-3 md:grid-cols-3">
             <StatTile label={t("noShowRate")} value={formatRate(operations.noShowRate)} />
             <StatTile label={t("courseAcceptanceRate")} value={formatRate(operations.courseAcceptanceRate)} />
             <StatTile label={t("installmentCollectionRate")} value={formatRate(operations.installmentCollectionRate)} />
           </div>
 
-          <div className="grid grid-cols-2 gap-4">
+          <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
             <div className="overflow-hidden rounded-[14px] border border-border bg-card">
               <div className="border-b border-border px-[18px] py-3.5">
                 <h3 className="text-[14.5px] font-semibold">{t("byMethod")}</h3>
