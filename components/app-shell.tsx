@@ -20,6 +20,7 @@ import {
   Wallet,
   X,
 } from "lucide-react";
+import { useSearchParams } from "next/navigation";
 import { api } from "@/convex/_generated/api";
 import { Link, usePathname, useRouter } from "@/i18n/navigation";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
@@ -204,6 +205,8 @@ function Sidebar() {
   const t = useTranslations("AppShell");
   const tSetup = useTranslations("Setup");
   const pathname = usePathname();
+  const searchParams = useSearchParams();
+  const tab = searchParams.get("tab");
   const palette = useCommandPalette();
   const router = useRouter();
   const { signOut } = useAuthActions();
@@ -297,7 +300,10 @@ function Sidebar() {
       <nav className="flex flex-col gap-0.5">
         {CLINIC_NAV_ITEMS.map((item) => {
           const Icon = item.icon;
-          const active = pathname === item.href;
+          const active =
+            item.key === "services"
+              ? pathname === "/settings" && tab === "appointments"
+              : pathname === "/settings" && tab !== "appointments";
           return (
             <Link
               key={item.key}

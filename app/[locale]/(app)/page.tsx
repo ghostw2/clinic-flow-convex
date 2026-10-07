@@ -16,12 +16,14 @@ import { NewAppointmentDrawer } from "@/components/calendar/new-appointment-draw
 import { avatarTint, initials } from "@/lib/format";
 import { addDays, formatDayHeading, startOfDay } from "@/lib/calendar";
 import { useCommandPalette } from "@/components/command-palette";
+import { useMediaQuery } from "@/lib/use-media-query";
 
 export default function DashboardPage() {
   const t = useTranslations("Dashboard");
   const locale = useLocale();
   const router = useRouter();
   const palette = useCommandPalette();
+  const isMobile = useMediaQuery("(max-width: 767px)");
   const [newDrawer, setNewDrawer] = React.useState<"appointment" | "walkIn" | null>(null);
 
   const [now] = React.useState(() => Date.now());
@@ -85,9 +87,35 @@ export default function DashboardPage() {
       }
     >
       <div className="flex flex-col gap-5">
-        <div>
-          <div className="text-sm text-muted-foreground capitalize">{formatDayHeading(todayStart, locale)}</div>
-        </div>
+        {isMobile ? (
+          <div className="flex items-start justify-between px-4 pt-4">
+            <div>
+              <div className="text-xs text-muted-foreground capitalize">
+                {formatDayHeading(todayStart, locale)}
+              </div>
+              <div className="text-[22px] font-bold leading-tight">
+                {greeting}
+                {firstName ? `, ${firstName}` : ""}
+              </div>
+            </div>
+            <div className="flex items-center gap-2">
+              <button
+                type="button"
+                onClick={() => palette.open()}
+                className="flex size-10 items-center justify-center rounded-full border border-border bg-card"
+              >
+                <Search className="size-4 text-muted-foreground" />
+              </button>
+              <Avatar size="sm">
+                <AvatarFallback>{me?.name ? initials(me.name) : "…"}</AvatarFallback>
+              </Avatar>
+            </div>
+          </div>
+        ) : (
+          <div>
+            <div className="text-sm text-muted-foreground capitalize">{formatDayHeading(todayStart, locale)}</div>
+          </div>
+        )}
 
         <div className="grid grid-cols-3 gap-3">
           <StatTile label={t("appointmentsToday")} value={todayAppts?.length ?? "…"} />
