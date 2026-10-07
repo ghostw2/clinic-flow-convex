@@ -91,9 +91,9 @@ export default function PatientRecordPage() {
         </div>
       }
     >
-      <div className="flex flex-col gap-5">
+      <div className="flex flex-col gap-5 px-4 pt-4 md:px-0 md:pt-0">
         {isMobile && (
-          <div className="flex items-center gap-2 px-4 pt-4">
+          <div className="flex items-center gap-2">
             <Link
               href="/patients"
               className="flex size-8 shrink-0 items-center justify-center rounded-md text-muted-foreground hover:bg-muted"

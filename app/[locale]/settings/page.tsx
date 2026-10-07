@@ -39,7 +39,7 @@ export default function SettingsPage() {
 
   return (
     <AppShell topbar={<h1 className="text-[18px] font-semibold tracking-tight">{t("title")}</h1>}>
-      <div className="flex flex-col gap-5">
+      <div className="flex flex-col gap-5 px-4 pt-4 md:px-0 md:pt-0">
         <div className="flex gap-5 overflow-x-auto border-b border-border">
           {tabs.map((tabItem) => (
             <Link

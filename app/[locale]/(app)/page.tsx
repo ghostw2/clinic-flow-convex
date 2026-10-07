@@ -86,9 +86,9 @@ export default function DashboardPage() {
         </>
       }
     >
-      <div className="flex flex-col gap-5">
+      <div className="flex flex-col gap-5 px-4 pt-4 md:px-0 md:pt-0">
         {isMobile ? (
-          <div className="flex items-start justify-between px-4 pt-4">
+          <div className="flex items-start justify-between">
             <div>
               <div className="text-xs text-muted-foreground capitalize">
                 {formatDayHeading(todayStart, locale)}
